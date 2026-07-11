@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { Award, Check, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const assetPath = "/src/assets/about us/";
+const assetPath = "/assets/about us/";
 const imageShape = "70% / 50%";
 const glassBorder = {
   boxShadow: [

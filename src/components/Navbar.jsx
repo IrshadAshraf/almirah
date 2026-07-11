@@ -115,7 +115,7 @@ export default function Navbar() {
           >
             <img
               className="w-18 rounded-full object-contain sm:w-26"
-              src="/src/assets/navbar/image 3726.png"
+              src="/assets/navbar/image 3726.png"
               alt="Almirah Collective"
             />
           </HashLink>
@@ -283,7 +283,7 @@ function ItemsDialog({ type, items, onClose }) {
                     className="flex items-center gap-4 rounded-2xl bg-white/80 p-3 shadow-lg shadow-stone-900/10 backdrop-blur-sm"
                   >
                     <img
-                      src={`/src/assets/collections/${item.image}`}
+                      src={`/assets/collections/${item.image}`}
                       alt=""
                       className="h-16 w-14 rounded-xl object-cover"
                     />

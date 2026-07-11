@@ -207,7 +207,7 @@ function CategoryCard({ category, index, onClick }) {
             <img
               className="h-full w-full rounded-[49%] object-cover transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105"
               style={{ borderRadius: category.shape }}
-              src={`/src/assets/browse categories/${category.image}`}
+              src={`/assets/browse categories/${category.image}`}
               alt={category.name}
             />
           </div>
@@ -260,7 +260,7 @@ function CategoryDialog({ category, onClose }) {
           className="relative min-h-56 overflow-hidden md:min-h-full"
         >
           <img
-            src={`/src/assets/browse categories/${category.image}`}
+            src={`/assets/browse categories/${category.image}`}
             alt={category.name}
             className="absolute inset-0 h-full w-full object-cover"
           />

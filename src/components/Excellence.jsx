@@ -132,11 +132,10 @@ function ExcellenceCard({ card, index, side, onClick }) {
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="group relative w-full overflow-hidden rounded-2xl border border-white/70 bg-white p-7 text-left shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
       >
-        <CardBorderAnimation index={index} />
         <CardFill index={index} hovered={hovered} />
         <motion.img
           aria-hidden="true"
-          src="/src/assets/Excellence/Vector to place at bottom right in bg of each card.png"
+          src="/assets/Excellence/Vector to place at bottom right in bg of each card.png"
           alt=""
           animate={{
             opacity: hovered ? 0.3 : 0.16,
@@ -172,77 +171,6 @@ function ExcellenceCard({ card, index, side, onClick }) {
         </p>
       </motion.button>
     </motion.div>
-  );
-}
-
-function CardBorderAnimation({ index }) {
-  const lightClass =
-    "absolute rounded-full bg-[#ffd9c0] shadow-[0_0_6px_2px_rgba(151,81,36,.75),0_0_12px_3px_rgba(255,255,255,.45)]";
-
-  if (index === 0) {
-    return (
-      <span className="pointer-events-none absolute inset-0 z-20 rounded-2xl">
-        <motion.i
-          animate={{ left: ["2%", "88%", "2%"] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className={`${lightClass} -top-0.5 h-1 w-8`}
-        />
-        <motion.i
-          animate={{ right: ["2%", "88%", "2%"] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className={`${lightClass} -bottom-0.5 h-1 w-8`}
-        />
-      </span>
-    );
-  }
-
-  if (index === 1) {
-    return (
-      <motion.span
-        aria-hidden="true"
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-        className="pointer-events-none absolute -inset-[1px] z-20 rounded-2xl bg-[conic-gradient(from_0deg,transparent_0deg,transparent_275deg,#ffd9c0_320deg,#975124_350deg,transparent_360deg)] p-[2px]"
-        style={{
-          WebkitMask:
-            "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
-          filter: "drop-shadow(0 0 4px rgba(151,81,36,.7))",
-        }}
-      />
-    );
-  }
-
-  if (index === 2) {
-    return (
-      <span className="pointer-events-none absolute inset-0 z-20 rounded-2xl">
-        <motion.i
-          animate={{ top: ["3%", "82%", "3%"] }}
-          transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-          className={`${lightClass} -left-0.5 h-8 w-1`}
-        />
-        <motion.i
-          animate={{ bottom: ["3%", "82%", "3%"] }}
-          transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-          className={`${lightClass} -right-0.5 h-8 w-1`}
-        />
-      </span>
-    );
-  }
-
-  return (
-    <span className="pointer-events-none absolute inset-0 z-20 rounded-2xl">
-      <motion.i
-        animate={{ offsetDistance: ["0%", "100%"] }}
-        transition={{ duration: 4.8, repeat: Infinity, ease: "linear" }}
-        className={`${lightClass} left-0 top-0 h-1.5 w-1.5`}
-        style={{
-          offsetPath: "inset(1px round 16px)",
-          offsetRotate: "0deg",
-        }}
-      />
-    </span>
   );
 }
 
@@ -350,7 +278,7 @@ function TiltImage() {
           animate={{ scale: hovered ? 1.06 : 1 }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="h-full w-full object-cover"
-          src="/src/assets/Excellence/Image (4).png"
+          src="/assets/Excellence/Image (4).png"
           alt="Fashion look"
         />
         <ImageBorderOrbit />

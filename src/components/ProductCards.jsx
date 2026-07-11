@@ -105,7 +105,7 @@ function Product({ item: [name, type, image], delay }) {
                 ease: "easeInOut",
               }}
               className="h-full w-full object-cover"
-              src={`/src/assets/collections/${image}`}
+              src={`/assets/collections/${image}`}
               alt={name}
             />
           </motion.div>
@@ -259,7 +259,7 @@ function ProductDialog({ item, onClose }) {
           animate={{ scale: 1 }}
           transition={{ duration: 0.65, ease: "easeOut" }}
           className="h-72 w-full object-cover md:h-full"
-          src={`/src/assets/collections/${item.image}`}
+          src={`/assets/collections/${item.image}`}
           alt={item.name}
         />
         <div className="relative p-7 sm:p-9">

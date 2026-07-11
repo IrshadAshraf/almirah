@@ -65,7 +65,7 @@ export default function Footer() {
         transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
         className="pointer-events-none absolute -inset-12 bg-cover bg-center opacity-30"
         style={{
-          backgroundImage: "url('/src/assets/footer/Animate this image.jpg')",
+          backgroundImage: "url('/assets/footer/Animate this image.jpg')",
         }}
       />
       <motion.div
@@ -78,7 +78,7 @@ export default function Footer() {
         transition={{ duration: 31, repeat: Infinity, ease: "easeInOut" }}
         className="pointer-events-none absolute -inset-16 bg-cover bg-center opacity-[.12] mix-blend-screen"
         style={{
-          backgroundImage: "url('/src/assets/footer/Animate this image.jpg')",
+          backgroundImage: "url('/assets/footer/Animate this image.jpg')",
         }}
       />
       <motion.div
@@ -98,7 +98,7 @@ export default function Footer() {
           <div>
             <img
               className="h-auto w-36 object-contain xl:w-28"
-              src="/src/assets/footer/almirah-logo-white.png"
+              src="/assets/footer/almirah-logo-white.png"
               alt="Almirah Collective"
             />
             <p className="mt-5 max-w-[280px] text-sm leading-[1.55] text-stone-200 xl:mt-3 xl:text-[13px] xl:leading-[1.4]">
@@ -217,7 +217,7 @@ export default function Footer() {
             className="transition hover:scale-105"
           >
             <img
-              src="/src/assets/footer/image 13.png"
+              src="/assets/footer/image 13.png"
               alt="Designed and hosted by Codesinc"
               className="h-auto w-52 xl:w-44"
             />

@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 
 const backgroundImage =
-  "url('/src/assets/gift giving/transparent bg for the background animation.png')";
+  "url('/assets/gift giving/transparent bg for the background animation.png')";
 
 const contentReveal = {
   hidden: {},

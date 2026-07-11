@@ -134,7 +134,7 @@ function ProcessCard({ step, index, onClick }) {
         >
           <img
             className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105"
-            src={`/src/assets/how it works/${image}`}
+            src={`/assets/how it works/${image}`}
             alt={title}
           />
         </div>

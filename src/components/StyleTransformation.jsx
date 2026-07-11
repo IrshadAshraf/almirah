@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { Star, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const assetPath = "/src/assets/style transformation/";
+const assetPath = "/assets/style transformation/";
 
 const features = [
   {

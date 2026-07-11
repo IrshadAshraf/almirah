@@ -187,7 +187,7 @@ function GalleryTile({ file, alt, index }) {
       >
         <img
           className="h-full w-full object-cover object-top"
-          src={`/src/assets/gallary/${file}`}
+          src={`/assets/gallary/${file}`}
           alt={alt}
         />
         <GalleryImageOverlay index={index} />
@@ -375,7 +375,7 @@ function GalleryDialog({ type, onClose }) {
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={`/src/assets/gallary/${product.image}`}
+                    src={`/assets/gallary/${product.image}`}
                     alt={product.name}
                     className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />

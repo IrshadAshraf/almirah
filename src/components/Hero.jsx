@@ -92,7 +92,7 @@ export default function Hero() {
         loop
         playsInline
       >
-        <source src="/src/assets/hero/Animate_mobile_screen_products_s…_202607101158.mp4" />
+        <source src="/assets/hero/Animate_mobile_screen_products_s…_202607101158.mp4" />
       </video>
       <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(250,239,231,.97)_0%,rgba(250,239,231,.85)_35%,rgba(245,223,205,.16)_72%)]" />
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
@@ -285,9 +285,9 @@ function DealerCard() {
       <BrownBorderTrail radius="28px" />
       <div className="relative min-w-[270px]">
         <div className="flex">
-          <Avatar src="/src/assets/hero/Client Image.png" />
-          <Avatar src="/src/assets/hero/Client Image (1).png" />
-          <Avatar src="/src/assets/hero/Client Image (2).png" />
+          <Avatar src="/assets/hero/Client Image.png" />
+          <Avatar src="/assets/hero/Client Image (1).png" />
+          <Avatar src="/assets/hero/Client Image (2).png" />
         </div>
         <strong className="mt-2 block text-[25px] font-medium leading-none text-black">
           1.6M+
