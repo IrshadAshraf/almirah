@@ -41,7 +41,7 @@ export default function NotificationBar() {
       animate={{ y: [0, -3, 0], opacity: 1 }}
       exit={{ y: -78, opacity: 0 }}
       transition={{ y: { duration: 2.6, repeat: Infinity, ease: "easeInOut" }, opacity: { duration: .3 } }}
-      className="fixed left-1/2 top-0 z-40 flex min-h-11 w-fit max-w-[calc(100vw-24px)] -translate-x-1/2 items-center justify-center rounded-b-3xl bg-brand px-5 py-3 text-[10px] font-medium tracking-wide text-white shadow-lg shadow-brand/25 sm:min-w-[510px] sm:px-8 sm:text-xs"
+      className="fixed left-1/2 top-0 z-40 flex min-h-11 w-[calc(100vw-24px)] -translate-x-1/2 items-center justify-center rounded-b-3xl bg-brand px-5 py-3 text-[10px] font-medium tracking-wide text-white shadow-lg shadow-brand/25 sm:w-[calc(100vw-40px)] sm:px-8 sm:text-xs md:w-fit md:min-w-[510px]"
     >
       <AnimatePresence mode="wait">
         <motion.div key={notice} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: .28 }} className="flex items-center gap-2">

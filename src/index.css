@@ -11,6 +11,8 @@
   * { @apply border-stone-200; }
   html { scroll-behavior: smooth; }
   body { @apply m-0 bg-white font-sans text-base text-ink antialiased; }
+  body:has([role="dialog"]) { overflow: hidden; }
+  [role="dialog"] { overscroll-behavior: contain; }
   button, a { -webkit-tap-highlight-color: transparent; }
   button:not(:disabled) { @apply cursor-pointer; }
 }

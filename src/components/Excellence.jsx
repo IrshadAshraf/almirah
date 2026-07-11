@@ -60,7 +60,7 @@ export default function Excellence() {
           </p>
         </motion.div>
 
-        <div className="mx-auto mt-14 grid max-w-[1560px] gap-6 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center">
+        <div className="mx-auto mt-14 grid max-w-[1640px] gap-6 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center">
           <div className="grid gap-6">
             {cards.slice(0, 2).map((card, index) => (
               <ExcellenceCard

@@ -29,7 +29,7 @@ const discoverLinks = [
   ["FAQ", "#faqs"],
 ];
 const iconButton =
-  "relative grid h-10 w-10 place-items-center rounded-full text-white transition hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  "relative grid h-9 w-9 shrink-0 place-items-center rounded-full text-white transition hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:h-10 sm:w-10";
 
 const getStoredItems = (key) => {
   try {
@@ -105,10 +105,16 @@ export default function Navbar() {
         transition={{ duration: 0.45, ease: "easeOut" }}
         className="fixed left-0 top-3 z-30 w-full px-3 sm:px-5 md:px-[4vw]"
       >
-        <nav className="relative mx-auto flex h-auto max-w-[1640px] items-center justify-between rounded-full border border-white/45 bg-stone-950/10 px-4 text-white shadow-2xl shadow-stone-950/15 backdrop-blur-2xl md:px-8 py-2">
-          <HashLink smooth to="#hero" aria-label="Almirah home" onClick={close}>
+        <nav className="relative mx-auto flex h-auto min-w-0 max-w-[1640px] items-center justify-between rounded-full border border-white/45 bg-stone-950/10 px-3 py-2 text-white shadow-2xl shadow-stone-950/15 backdrop-blur-2xl sm:px-4 md:px-8">
+          <HashLink
+            smooth
+            to="#hero"
+            aria-label="Almirah home"
+            onClick={close}
+            className="shrink-0"
+          >
             <img
-              className="w-26 rounded-full object-contain"
+              className="w-18 rounded-full object-contain sm:w-26"
               src="/src/assets/navbar/image 3726.png"
               alt="Almirah Collective"
             />
@@ -134,7 +140,7 @@ export default function Navbar() {
               />
             </button>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex min-w-0 shrink-0 items-center gap-0.5 sm:gap-1">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className={iconButton}

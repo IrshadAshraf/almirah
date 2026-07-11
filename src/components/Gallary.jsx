@@ -11,19 +11,57 @@ import AnimatedPillLabel from "./AnimatedPillLabel";
 import { addToCart, Float, removeFromCart, Reveal, toggleLike } from "./ui";
 const images = [
   { file: "image 3719.png", alt: "Floral occasion wear", rows: "row-span-9" },
-  { file: "image 3720.png", alt: "Waterfront casual style", rows: "row-span-11" },
+  {
+    file: "image 3720.png",
+    alt: "Waterfront casual style",
+    rows: "row-span-11",
+  },
   { file: "image 3721.png", alt: "Classic tailored suit", rows: "row-span-8" },
   { file: "image 3722.png", alt: "Relaxed café style", rows: "row-span-8" },
-  { file: "image 3723.png", alt: "Burgundy traditional wear", rows: "row-span-8" },
+  {
+    file: "image 3723.png",
+    alt: "Burgundy traditional wear",
+    rows: "row-span-8",
+  },
   { file: "image 3724.png", alt: "Checked casual shirt", rows: "row-span-10" },
 ];
 const galleryProducts = [
-  { name: "Blush Floral Ensemble", category: "Occasion Wear", price: "₹4,890", image: "image 3719.png" },
-  { name: "Coastal Layered Look", category: "Contemporary Men", price: "₹3,290", image: "image 3720.png" },
-  { name: "Midnight Tailored Suit", category: "Formal Edit", price: "₹7,490", image: "image 3721.png" },
-  { name: "Sandstone Polo Set", category: "Relaxed Essentials", price: "₹2,690", image: "image 3722.png" },
-  { name: "Burgundy Festive Set", category: "Ethnic Wear", price: "₹5,290", image: "image 3723.png" },
-  { name: "Sage Checked Shirt", category: "Everyday Men", price: "₹2,390", image: "image 3724.png" },
+  {
+    name: "Blush Floral Ensemble",
+    category: "Occasion Wear",
+    price: "₹4,890",
+    image: "image 3719.png",
+  },
+  {
+    name: "Coastal Layered Look",
+    category: "Contemporary Men",
+    price: "₹3,290",
+    image: "image 3720.png",
+  },
+  {
+    name: "Midnight Tailored Suit",
+    category: "Formal Edit",
+    price: "₹7,490",
+    image: "image 3721.png",
+  },
+  {
+    name: "Sandstone Polo Set",
+    category: "Relaxed Essentials",
+    price: "₹2,690",
+    image: "image 3722.png",
+  },
+  {
+    name: "Burgundy Festive Set",
+    category: "Ethnic Wear",
+    price: "₹5,290",
+    image: "image 3723.png",
+  },
+  {
+    name: "Sage Checked Shirt",
+    category: "Everyday Men",
+    price: "₹2,390",
+    image: "image 3724.png",
+  },
 ];
 export default function Gallary() {
   const [dialog, setDialog] = useState(null);
@@ -37,41 +75,36 @@ export default function Gallary() {
   return (
     <>
       <section className="px-6 py-24 text-center md:px-[5vw]">
-      <Reveal effect="blur">
-        <AnimatedPillLabel>OUR GALLERY</AnimatedPillLabel>
-        <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">
-          Creativity in Every Detail
-        </h2>
-        <p className="mx-auto mt-5 max-w-3xl text-slate-500">
-          Explore a collection of our finest products, thoughtfully crafted with
-          quality materials, innovative designs, and exceptional attention to
-          detail.
-        </p>
-      </Reveal>
-      <div className="mx-auto mt-12 grid max-w-[1260px] auto-rows-[12px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map(({ file, alt, rows }, i) => (
-          <Float
-            key={file}
-            delay={i * 0.15}
-            className={`${rows} h-full min-h-0`}
-          >
-            <GalleryTile file={file} alt={alt} index={i} />
-          </Float>
-        ))}
-      </div>
-      <div className="mt-9 flex flex-wrap justify-center gap-4">
-        <MagneticGalleryButton
-          onClick={() => setDialog("explore")}
-          primary
-        >
-          Explore Collection
-        </MagneticGalleryButton>
-        <MagneticGalleryButton
-          onClick={() => setDialog("all")}
-        >
-          View All Products
-        </MagneticGalleryButton>
-      </div>
+        <Reveal effect="blur">
+          <AnimatedPillLabel>OUR GALLERY</AnimatedPillLabel>
+          <h2 className="mt-5 text-2xl font-bold tracking-tight md:text-6xl">
+            Creativity in Every Detail
+          </h2>
+          <p className="mx-auto mt-5 max-w-3xl text-slate-500">
+            Explore a collection of our finest products, thoughtfully crafted
+            with quality materials, innovative designs, and exceptional
+            attention to detail.
+          </p>
+        </Reveal>
+        <div className="mx-auto mt-12 grid max-w-[1640px] auto-rows-[12px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {images.map(({ file, alt, rows }, i) => (
+            <Float
+              key={file}
+              delay={i * 0.15}
+              className={`${rows} h-full min-h-0`}
+            >
+              <GalleryTile file={file} alt={alt} index={i} />
+            </Float>
+          ))}
+        </div>
+        <div className="mt-9 flex flex-wrap justify-center gap-4">
+          <MagneticGalleryButton onClick={() => setDialog("explore")} primary>
+            Explore Collection
+          </MagneticGalleryButton>
+          <MagneticGalleryButton onClick={() => setDialog("all")}>
+            View All Products
+          </MagneticGalleryButton>
+        </div>
       </section>
       {createPortal(
         <AnimatePresence>
@@ -170,7 +203,12 @@ function GalleryImageOverlay({ index }) {
     return (
       <motion.span
         animate={{ x: ["-140%", "240%"] }}
-        transition={{ duration: 4.8, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
+        transition={{
+          duration: 4.8,
+          repeat: Infinity,
+          repeatDelay: 1.2,
+          ease: "easeInOut",
+        }}
         className={`${base} -inset-y-8 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent blur-sm`}
       />
     );
@@ -179,7 +217,12 @@ function GalleryImageOverlay({ index }) {
   if (index === 1) {
     return (
       <motion.span
-        animate={{ scale: [0.7, 1.35, 0.7], opacity: [0.14, 0.5, 0.14], x: [-20, 35, -20], y: [20, -30, 20] }}
+        animate={{
+          scale: [0.7, 1.35, 0.7],
+          opacity: [0.14, 0.5, 0.14],
+          x: [-20, 35, -20],
+          y: [20, -30, 20],
+        }}
         transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
         className={`${base} left-[20%] top-[25%] h-44 w-44 rounded-full bg-white blur-3xl`}
       />
@@ -190,7 +233,12 @@ function GalleryImageOverlay({ index }) {
     return (
       <motion.span
         animate={{ y: ["-20%", "520%"] }}
-        transition={{ duration: 4.5, repeat: Infinity, repeatDelay: 0.8, ease: "easeInOut" }}
+        transition={{
+          duration: 4.5,
+          repeat: Infinity,
+          repeatDelay: 0.8,
+          ease: "easeInOut",
+        }}
         className={`${base} left-0 top-0 h-14 w-full bg-gradient-to-b from-transparent via-[#f5d4bf]/65 to-transparent blur-sm`}
       />
     );
@@ -234,7 +282,9 @@ function GalleryImageOverlay({ index }) {
 
 const savedNames = (key) => {
   try {
-    return JSON.parse(localStorage.getItem(key) || "[]").map((item) => item.name);
+    return JSON.parse(localStorage.getItem(key) || "[]").map(
+      (item) => item.name,
+    );
   } catch {
     return [];
   }
@@ -243,7 +293,8 @@ const savedNames = (key) => {
 function GalleryDialog({ type, onClose }) {
   const [cart, setCart] = useState(() => savedNames("almirah-cart"));
   const [likes, setLikes] = useState(() => savedNames("almirah-likes"));
-  const products = type === "explore" ? galleryProducts.slice(0, 3) : galleryProducts;
+  const products =
+    type === "explore" ? galleryProducts.slice(0, 3) : galleryProducts;
   const isExplore = type === "explore";
 
   useEffect(() => {
@@ -280,7 +331,7 @@ function GalleryDialog({ type, onClose }) {
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-5 z-20 grid h-10 w-10 place-items-center rounded-full bg-stone-900 text-white shadow-lg transition hover:rotate-90"
+          className="sticky top-0 z-20 float-right grid h-10 w-10 place-items-center rounded-full bg-stone-900 text-white shadow-lg transition hover:rotate-90"
           aria-label="Close gallery products"
         >
           <X className="h-5 w-5" />
@@ -288,10 +339,17 @@ function GalleryDialog({ type, onClose }) {
 
         <div className="pr-14">
           <p className="text-xs font-bold uppercase tracking-[.18em] text-brand">
-            {isExplore ? "A curated starting point" : "The complete gallery edit"}
+            {isExplore
+              ? "A curated starting point"
+              : "The complete gallery edit"}
           </p>
-          <h2 id="gallery-dialog-title" className="mt-2 text-3xl font-bold sm:text-4xl">
-            {isExplore ? "Explore our signature collection" : "Shop every gallery look"}
+          <h2
+            id="gallery-dialog-title"
+            className="mt-2 text-3xl font-bold sm:text-4xl"
+          >
+            {isExplore
+              ? "Explore our signature collection"
+              : "Shop every gallery look"}
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-stone-600 sm:text-base">
             {isExplore
@@ -300,7 +358,9 @@ function GalleryDialog({ type, onClose }) {
           </p>
         </div>
 
-        <div className={`mt-7 grid gap-5 ${isExplore ? "md:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
+        <div
+          className={`mt-7 grid gap-5 ${isExplore ? "md:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-3"}`}
+        >
           {products.map((product, index) => {
             const liked = likes.includes(product.name);
             const added = cart.includes(product.name);
@@ -323,28 +383,47 @@ function GalleryDialog({ type, onClose }) {
                     type="button"
                     onClick={() => toggleLike(item)}
                     className={`absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/90 shadow-md backdrop-blur transition hover:scale-110 ${liked ? "text-red-500" : "text-stone-500"}`}
-                    aria-label={liked ? "Remove from favourites" : "Add to favourites"}
+                    aria-label={
+                      liked ? "Remove from favourites" : "Add to favourites"
+                    }
                   >
-                    <Heart className="h-4 w-4" fill={liked ? "currentColor" : "none"} />
+                    <Heart
+                      className="h-4 w-4"
+                      fill={liked ? "currentColor" : "none"}
+                    />
                   </button>
                 </div>
                 <div className="p-4">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-brand">{product.category}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-brand">
+                    {product.category}
+                  </p>
                   <div className="mt-1 flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-bold text-stone-900">{product.name}</h3>
-                      <p className="mt-1 text-sm font-semibold text-stone-600">{product.price}</p>
+                      <h3 className="font-bold text-stone-900">
+                        {product.name}
+                      </h3>
+                      <p className="mt-1 text-sm font-semibold text-stone-600">
+                        {product.price}
+                      </p>
                     </div>
                     <button
                       type="button"
-                      onClick={() => (added ? removeFromCart(product.name) : addToCart(item))}
+                      onClick={() =>
+                        added ? removeFromCart(product.name) : addToCart(item)
+                      }
                       className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-white shadow-md transition hover:scale-110 ${added ? "bg-red-500" : "bg-brand"}`}
                       aria-label={added ? "Remove from cart" : "Add to cart"}
                     >
-                      {added ? <Trash2 className="h-4 w-4" /> : <ShoppingCart className="h-4 w-4" />}
+                      {added ? (
+                        <Trash2 className="h-4 w-4" />
+                      ) : (
+                        <ShoppingCart className="h-4 w-4" />
+                      )}
                     </button>
                   </div>
-                  <p className={`mt-3 text-xs font-bold ${added ? "text-emerald-600" : "text-stone-400"}`}>
+                  <p
+                    className={`mt-3 text-xs font-bold ${added ? "text-emerald-600" : "text-stone-400"}`}
+                  >
                     {added ? "Added to your bag" : "Ready to add"}
                   </p>
                 </div>
@@ -355,7 +434,8 @@ function GalleryDialog({ type, onClose }) {
 
         <div className="mt-7 flex flex-wrap items-center justify-between gap-3 border-t border-stone-200 pt-5">
           <p className="text-sm text-stone-500">
-            {cart.length} {cart.length === 1 ? "item" : "items"} currently in your bag
+            {cart.length} {cart.length === 1 ? "item" : "items"} currently in
+            your bag
           </p>
           <button
             type="button"

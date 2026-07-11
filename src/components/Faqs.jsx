@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Check, ChevronRight, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import AnimatedSeparatorTrail from "./AnimatedSeparatorTrail";
 import { Reveal } from "./ui";
 
 const faqItems = [
@@ -69,7 +68,7 @@ export default function Faqs() {
 
   return (
     <>
-      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-20 text-left md:grid-cols-2 md:gap-24 md:px-10 md:py-28">
+      <section className="mx-auto grid w-full max-w-[1640px] grid-cols-1 gap-10 px-6 py-20 text-left md:w-[92vw] md:grid-cols-2 md:gap-24 md:px-0 md:py-28">
         <Reveal>
           <div>
             <h2 className="m-0 text-4xl font-bold tracking-[-0.06em] text-[#12252b] md:text-5xl">
@@ -80,7 +79,10 @@ export default function Faqs() {
             <p className="mt-10 text-sm leading-7 text-stone-600 md:text-base">
               Everything You Need to Know About Our Products &amp; Services
             </p>
-            <AnimatedSeparatorTrail className="my-12 md:my-20" />
+            <div
+              aria-hidden="true"
+              className="my-12 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent md:my-20"
+            />
             <div className="grid gap-3 text-sm text-stone-600 sm:grid-cols-2">
               <span className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-brand" /> Top Quality Products
@@ -113,6 +115,7 @@ export default function Faqs() {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="group relative mt-2 isolate overflow-hidden rounded-2xl border border-brand/25 bg-white px-6 py-4 text-sm font-bold text-brand shadow-sm transition-[border-color,box-shadow,color] duration-500 hover:border-brand hover:text-white hover:shadow-xl hover:shadow-brand/25"
           >
+            <span className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-brand transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-x-100" />
             <span className="pointer-events-none absolute -bottom-10 -left-10 h-20 w-20 rounded-full bg-brand transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[7]" />
             <span className="pointer-events-none absolute -right-8 -top-8 h-16 w-16 rounded-full bg-[#b9764b] opacity-80 transition-transform delay-75 duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[7]" />
             <span className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/4 -skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm transition-transform delay-200 duration-700 group-hover:translate-x-[600%]" />
@@ -221,7 +224,7 @@ function FaqDialog({ onClose }) {
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-stone-900 text-white transition hover:rotate-90"
+          className="sticky top-0 z-20 float-right grid h-10 w-10 place-items-center rounded-full bg-stone-900 text-white shadow-lg transition hover:rotate-90"
           aria-label="Close all FAQs"
         >
           <X className="h-5 w-5" />
@@ -231,9 +234,9 @@ function FaqDialog({ onClose }) {
         </p>
         <h2
           id="faq-dialog-title"
-          className="mt-3 pr-14 text-3xl font-bold text-[#12252b] sm:text-4xl"
+          className="mt-3 pr-14 text-2xl font-bold text-[#12252b] sm:text-3xl"
         >
-          All frequently asked questions
+          Frequently Asked Questions
         </h2>
         <p className="mt-3 max-w-xl text-stone-600">
           Quick, clear answers about ordering, delivery, returns, sizing, and

@@ -46,7 +46,7 @@ export default function HowItWorks() {
 
   return (
     <>
-      <section className="px-6 py-16 text-center md:px-[5vw] md:py-20">
+      <section className="overflow-x-clip px-6 py-16 text-center md:px-[5vw] md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -59,7 +59,7 @@ export default function HowItWorks() {
           </h2>
         </motion.div>
 
-        <div className="mx-auto mt-14 grid max-w-[1280px] grid-cols-1 gap-8 text-left md:grid-cols-2 md:gap-10 lg:mt-16 xl:grid-cols-3">
+        <div className="mx-auto mt-14 grid max-w-[1640px] grid-cols-1 gap-8 text-left md:grid-cols-2 md:gap-10 lg:mt-16 xl:grid-cols-3">
           {steps.map((step, index) => (
             <ProcessCard
               key={step.title}
@@ -127,7 +127,6 @@ function ProcessCard({ step, index, onClick }) {
         whileHover={{ scale: 1.018 }}
         className="group relative overflow-hidden rounded-[22px] border border-[#eaded7] bg-[#fffdfc] shadow-sm transition-shadow duration-500 hover:shadow-2xl hover:shadow-stone-900/15"
       >
-        <ProcessBorderAnimation index={index} />
         <div
           className={`h-[296px] overflow-hidden ${
             index === 0 ? "rounded-[21px]" : "rounded-t-[21px]"
@@ -176,55 +175,6 @@ function ProcessCard({ step, index, onClick }) {
         </div>
       </motion.article>
     </motion.div>
-  );
-}
-
-function ProcessBorderAnimation({ index }) {
-  const path = "inset(1px round 22px)";
-
-  if (index === 0) {
-    return (
-      <span className="pointer-events-none absolute inset-0 z-20 rounded-[22px]">
-        <motion.i
-          animate={{ offsetDistance: ["0%", "100%"] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-          className="absolute left-0 top-0 h-2 w-2 rounded-full bg-[#ffd8be] shadow-[0_0_7px_2px_rgba(151,81,36,.85)]"
-          style={{ offsetPath: path, offsetRotate: "0deg" }}
-        />
-      </span>
-    );
-  }
-
-  if (index === 1) {
-    return (
-      <span className="pointer-events-none absolute inset-0 z-20 rounded-[22px]">
-        <motion.i
-          animate={{ left: ["2%", "82%", "2%"] }}
-          transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-0.5 h-1 w-14 rounded-full bg-gradient-to-r from-transparent via-brand to-[#ffd8be] shadow-[0_0_7px_rgba(151,81,36,.8)]"
-        />
-        <motion.i
-          animate={{ right: ["2%", "82%", "2%"] }}
-          transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-0.5 h-1 w-14 rounded-full bg-gradient-to-l from-transparent via-brand to-[#ffd8be] shadow-[0_0_7px_rgba(151,81,36,.8)]"
-        />
-      </span>
-    );
-  }
-
-  return (
-    <span className="pointer-events-none absolute inset-0 z-20 rounded-[22px]">
-      <motion.i
-        animate={{ top: ["2%", "84%", "2%"] }}
-        transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -left-0.5 h-14 w-1 rounded-full bg-gradient-to-b from-transparent via-brand to-[#ffd8be] shadow-[0_0_7px_rgba(151,81,36,.8)]"
-      />
-      <motion.i
-        animate={{ bottom: ["2%", "84%", "2%"] }}
-        transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-0.5 h-14 w-1 rounded-full bg-gradient-to-t from-transparent via-brand to-[#ffd8be] shadow-[0_0_7px_rgba(151,81,36,.8)]"
-      />
-    </span>
   );
 }
 

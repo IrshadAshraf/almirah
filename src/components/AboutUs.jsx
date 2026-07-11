@@ -54,7 +54,7 @@ export default function AboutUs() {
     return () => removeEventListener("keydown", closeOnEscape);
   }, []);
   return (
-    <section className="mx-auto grid max-w-[1644px] gap-14 overflow-hidden px-6 py-20 md:grid-cols-2 md:items-center md:px-[5vw] lg:gap-20">
+    <section className="mx-auto grid max-w-[1640px] gap-14 overflow-hidden px-6 py-20 md:grid-cols-2 md:items-center md:px-[5vw] lg:gap-20">
       <ImageComposition />
       <motion.div
         initial={{ opacity: 0, x: 55, filter: "blur(12px)" }}
@@ -331,8 +331,6 @@ function Info({ icon, title, text, delay, onClick }) {
       onClick={onClick}
       className="group relative flex w-full gap-5 overflow-hidden rounded-2xl border border-white/70 bg-white/70 p-6 text-left shadow-xl shadow-stone-900/8 backdrop-blur-xl transition-colors duration-500 hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
     >
-      <HorizontalBorderTrail position="top" delay={delay} />
-      <HorizontalBorderTrail position="bottom" delay={delay + 1.3} />
       <span className="relative grid h-14 w-14 shrink-0 place-items-center rounded-full bg-brand p-3 shadow-lg shadow-brand/30 transition duration-500 group-hover:scale-110 group-hover:shadow-[0_0_24px_rgba(255,255,255,.95)]">
         <img
           src={`${assetPath}${icon}`}
@@ -347,53 +345,6 @@ function Info({ icon, title, text, delay, onClick }) {
         </p>
       </div>
     </motion.button>
-  );
-}
-
-function HorizontalBorderTrail({ position, delay }) {
-  return (
-    <motion.span
-      aria-hidden="true"
-      className={`pointer-events-none absolute left-0 z-10 h-2 w-[28%] ${
-        position === "top" ? "-top-1" : "-bottom-1"
-      }`}
-      animate={{ left: ["0%", "72%", "0%"] }}
-      transition={{
-        duration: 5.2,
-        delay,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-    >
-      <motion.span
-        className="absolute inset-0"
-        animate={{ opacity: [1, 1, 0, 0, 1] }}
-        transition={{
-          duration: 5.2,
-          delay,
-          repeat: Infinity,
-          ease: "easeInOut",
-          times: [0, 0.44, 0.5, 0.94, 1],
-        }}
-      >
-        <span className="absolute left-0 top-1/2 h-[2px] w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-brand/35 to-brand shadow-[0_0_6px_rgba(151,81,36,.5)]" />
-        <span className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 translate-x-1/2 rounded-full bg-brand shadow-[0_0_7px_2px_rgba(151,81,36,.85),0_0_14px_4px_rgba(151,81,36,.35)]" />
-      </motion.span>
-      <motion.span
-        className="absolute inset-0"
-        animate={{ opacity: [0, 0, 1, 1, 0] }}
-        transition={{
-          duration: 5.2,
-          delay,
-          repeat: Infinity,
-          ease: "easeInOut",
-          times: [0, 0.44, 0.5, 0.94, 1],
-        }}
-      >
-        <span className="absolute left-0 top-1/2 h-[2px] w-full -translate-y-1/2 bg-gradient-to-l from-transparent via-brand/35 to-brand shadow-[0_0_6px_rgba(151,81,36,.5)]" />
-        <span className="absolute left-0 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand shadow-[0_0_7px_2px_rgba(151,81,36,.85),0_0_14px_4px_rgba(151,81,36,.35)]" />
-      </motion.span>
-    </motion.span>
   );
 }
 

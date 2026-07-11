@@ -4,10 +4,46 @@ import { Check, ShieldCheck, Star, Truck, WalletCards, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const features = [
-  [Star, "Handpicked Selection", "No overwhelming catalogs. Only styles worth wearing.", ["Carefully curated collections", "Versatile styles for real wardrobes", "Less searching, better choices"]],
-  [WalletCards, "Affordable Luxury", "Premium looks without premium prices.", ["Elevated style at considered prices", "Quality details without the markup", "Pieces designed to feel special"]],
-  [ShieldCheck, "Quality First", "Every piece is checked for quality and comfort.", ["Fabrics selected with care", "Finishing and fit thoughtfully reviewed", "Comfort considered in every choice"]],
-  [Truck, "Fast Delivery", "Reliable shipping right to your doorstep.", ["Orders prepared with care", "Dependable delivery updates", "Fashion delivered to your doorstep"]],
+  [
+    Star,
+    "Handpicked Selection",
+    "No overwhelming catalogs. Only styles worth wearing.",
+    [
+      "Carefully curated collections",
+      "Versatile styles for real wardrobes",
+      "Less searching, better choices",
+    ],
+  ],
+  [
+    WalletCards,
+    "Affordable Luxury",
+    "Premium looks without premium prices.",
+    [
+      "Elevated style at considered prices",
+      "Quality details without the markup",
+      "Pieces designed to feel special",
+    ],
+  ],
+  [
+    ShieldCheck,
+    "Quality First",
+    "Every piece is checked for quality and comfort.",
+    [
+      "Fabrics selected with care",
+      "Finishing and fit thoughtfully reviewed",
+      "Comfort considered in every choice",
+    ],
+  ],
+  [
+    Truck,
+    "Fast Delivery",
+    "Reliable shipping right to your doorstep.",
+    [
+      "Orders prepared with care",
+      "Dependable delivery updates",
+      "Fashion delivered to your doorstep",
+    ],
+  ],
 ];
 
 export default function WomenAffection() {
@@ -23,36 +59,36 @@ export default function WomenAffection() {
   return (
     <>
       <section className="overflow-hidden px-6 py-24 text-center md:px-[5vw]">
-      <motion.div
-        initial={{ opacity: 0, rotateX: 72, y: 45, filter: "blur(12px)" }}
-        whileInView={{ opacity: 1, rotateX: 0, y: 0, filter: "blur(0px)" }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        style={{ transformPerspective: 900 }}
-      >
-        <motion.h2
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-          className="text-4xl font-bold tracking-tight md:text-5xl"
+        <motion.div
+          initial={{ opacity: 0, rotateX: 72, y: 45, filter: "blur(12px)" }}
+          whileInView={{ opacity: 1, rotateX: 0, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          style={{ transformPerspective: 900 }}
         >
-          Why Women Love Almirah
-          <br />
-          Collective
-        </motion.h2>
-      </motion.div>
+          <motion.h2
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            className="text-2xl font-bold tracking-tight md:text-5xl"
+          >
+            Why Women Love Almirah
+            <br />
+            Collective
+          </motion.h2>
+        </motion.div>
 
-      <div className="mx-auto mt-14 grid max-w-[1536px] gap-6 text-left sm:grid-cols-2 xl:grid-cols-4">
-        {features.map(([Icon, title, text, points], index) => (
-          <FeatureCard
-            key={title}
-            Icon={Icon}
-            title={title}
-            text={text}
-            index={index}
-            onClick={() => setActiveFeature({ Icon, title, text, points })}
-          />
-        ))}
-      </div>
+        <div className="mx-auto mt-14 grid max-w-[1640px] gap-6 text-left sm:grid-cols-2 xl:grid-cols-4">
+          {features.map(([Icon, title, text, points], index) => (
+            <FeatureCard
+              key={title}
+              Icon={Icon}
+              title={title}
+              text={text}
+              index={index}
+              onClick={() => setActiveFeature({ Icon, title, text, points })}
+            />
+          ))}
+        </div>
       </section>
       {createPortal(
         <AnimatePresence>
@@ -130,8 +166,6 @@ function FeatureCard({ Icon, title, text, index, onClick }) {
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="pointer-events-none absolute inset-0 origin-bottom bg-brand"
           />
-          <FeatureBorderAnimation index={index} />
-
           <motion.span
             animate={
               hovered
@@ -144,7 +178,11 @@ function FeatureCard({ Icon, title, text, index, onClick }) {
                       "0 0 14px 4px rgba(255,255,255,.4)",
                     ],
                   }
-                : { scale: 1, rotate: 0, boxShadow: "0 0 0 rgba(255,255,255,0)" }
+                : {
+                    scale: 1,
+                    rotate: 0,
+                    boxShadow: "0 0 0 rgba(255,255,255,0)",
+                  }
             }
             transition={
               hovered
@@ -173,74 +211,6 @@ function FeatureCard({ Icon, title, text, index, onClick }) {
         </motion.button>
       </motion.div>
     </motion.div>
-  );
-}
-
-function FeatureBorderAnimation({ index }) {
-  const path = "inset(1px round 16px)";
-
-  if (index === 0) {
-    return (
-      <span className="pointer-events-none absolute inset-0 z-20 rounded-2xl">
-        <motion.i
-          animate={{ offsetDistance: ["0%", "100%"] }}
-          transition={{ duration: 4.4, repeat: Infinity, ease: "linear" }}
-          className="absolute left-0 top-0 h-2 w-2 rounded-full bg-[#ffd8be] shadow-[0_0_7px_2px_rgba(151,81,36,.8)]"
-          style={{ offsetPath: path, offsetRotate: "0deg" }}
-        />
-      </span>
-    );
-  }
-
-  if (index === 1) {
-    return (
-      <span className="pointer-events-none absolute inset-0 z-20 rounded-2xl">
-        {[0, -2.4].map((delay) => (
-          <motion.i
-            key={delay}
-            animate={{ offsetDistance: ["100%", "0%"] }}
-            transition={{
-              duration: 4.8,
-              delay,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute left-0 top-0 h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_7px_2px_rgba(151,81,36,.8),0_0_13px_3px_rgba(255,255,255,.65)]"
-            style={{ offsetPath: path, offsetRotate: "0deg" }}
-          />
-        ))}
-      </span>
-    );
-  }
-
-  if (index === 2) {
-    return (
-      <span className="pointer-events-none absolute inset-0 z-20 rounded-2xl">
-        <motion.i
-          animate={{ offsetDistance: ["0%", "100%"] }}
-          transition={{ duration: 5.2, repeat: Infinity, ease: "linear" }}
-          className="absolute left-0 top-0 h-[3px] w-14 rounded-full bg-gradient-to-r from-transparent via-[#ffd8be] to-white shadow-[0_0_8px_2px_rgba(151,81,36,.7)]"
-          style={{ offsetPath: path, offsetRotate: "auto" }}
-        />
-      </span>
-    );
-  }
-
-  return (
-    <motion.span
-      aria-hidden="true"
-      animate={{
-        boxShadow: [
-          "inset 3px 0 0 rgba(151,81,36,.85), inset 0 0 0 rgba(151,81,36,0)",
-          "inset 0 3px 0 rgba(151,81,36,.85), inset 0 0 12px rgba(255,216,190,.35)",
-          "inset -3px 0 0 rgba(151,81,36,.85), inset 0 0 0 rgba(151,81,36,0)",
-          "inset 0 -3px 0 rgba(151,81,36,.85), inset 0 0 12px rgba(255,216,190,.35)",
-          "inset 3px 0 0 rgba(151,81,36,.85), inset 0 0 0 rgba(151,81,36,0)",
-        ],
-      }}
-      transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
-      className="pointer-events-none absolute inset-0 z-20 rounded-2xl"
-    />
   );
 }
 
@@ -289,22 +259,20 @@ function FeatureDialog({ feature, onClose }) {
         </h2>
         <p className="mt-4 leading-relaxed text-stone-600">{text}</p>
         <div className="mt-6 space-y-3">
-          {points.map(
-            (point, index) => (
-              <motion.div
-                key={point}
-                initial={{ opacity: 0, x: -14 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.18 + index * 0.08 }}
-                className="flex items-center gap-3 text-sm text-stone-700"
-              >
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-brand/10 text-brand">
-                  <Check className="h-3.5 w-3.5" />
-                </span>
-                {point}
-              </motion.div>
-            ),
-          )}
+          {points.map((point, index) => (
+            <motion.div
+              key={point}
+              initial={{ opacity: 0, x: -14 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.18 + index * 0.08 }}
+              className="flex items-center gap-3 text-sm text-stone-700"
+            >
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-brand/10 text-brand">
+                <Check className="h-3.5 w-3.5" />
+              </span>
+              {point}
+            </motion.div>
+          ))}
         </div>
       </motion.section>
     </motion.div>

@@ -119,7 +119,7 @@ export default function Hero() {
           className="absolute left-[20%] top-[20%] h-72 w-72 rounded-full border border-brand/20 border-dashed"
         />
       </div>
-      <div className="relative mx-auto flex min-h-[760px] w-full max-w-[1536px] items-center px-6 pb-24 pt-44 md:min-h-[855px] md:px-0">
+      <div className="relative mx-auto flex min-h-[760px] w-full max-w-[1640px] items-center px-6 pb-24 pt-44 md:min-h-[855px] md:w-[92vw] md:px-0">
         <motion.div
           initial={{ opacity: 0, x: -46 }}
           animate={{ opacity: 1, x: 0 }}
@@ -139,7 +139,7 @@ export default function Hero() {
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -left-7 top-[38%] h-14 w-[88%] bg-gradient-to-r from-transparent via-brand/35 to-transparent blur-xl"
             />
-            <h1 className="relative text-5xl font-bold leading-[.95] tracking-wider text-ink sm:text-7xl lg:text-[4.8rem]">
+            <h1 className="relative text-4xl font-bold leading-[.95] tracking-wider text-ink sm:text-7xl lg:text-[4.8rem]">
               Elevated Style
               <br />
               for Everyday
@@ -151,7 +151,7 @@ export default function Hero() {
             Discover handpicked fashion pieces that blend comfort, elegance, and
             individuality. Chosen to help you look effortlessly stylish.
           </p>
-          <div className="mt-9 flex flex-wrap gap-4">
+          <div className="mt-9 flex flex-nowrap gap-1 sm:gap-4">
             <HashLink
               smooth
               to="#collections"
@@ -159,14 +159,14 @@ export default function Hero() {
                 event.preventDefault();
                 setActivePerk("arrivals");
               }}
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 text-sm font-bold text-white transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/35"
+              className="inline-flex min-w-0 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-full bg-brand px-2 py-3.5 text-[11px] font-bold text-white transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/35 sm:gap-2 sm:px-7 sm:py-4 sm:text-sm"
             >
-              Shop New Arrivals <ArrowUpRight className="h-4 w-4" />
+              Shop New Arrivals <ArrowUpRight className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" />
             </HashLink>
             <motion.div
               animate={glassBorder}
               transition={glassTransition}
-              className="relative rounded-full"
+              className="relative min-w-0 flex-1 rounded-full"
             >
               <BrownBorderTrail />
               <HashLink
@@ -176,7 +176,7 @@ export default function Hero() {
                   event.preventDefault();
                   setActivePerk("collection");
                 }}
-                className="inline-flex rounded-full border border-ink bg-white/20 px-7 py-4 text-sm font-bold text-ink backdrop-blur-sm transition hover:-translate-y-1 hover:bg-white/70"
+                className="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full border border-ink bg-white/20 px-2 py-3.5 text-[11px] font-bold text-ink backdrop-blur-sm transition hover:-translate-y-1 hover:bg-white/70 sm:px-7 sm:py-4 sm:text-sm"
               >
                 Shop Collection
               </HashLink>

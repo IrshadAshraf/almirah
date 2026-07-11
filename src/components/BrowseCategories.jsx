@@ -123,7 +123,7 @@ export default function BrowseCategories() {
       >
         Browse By Category
       </motion.h2>
-      <div className="mx-auto mt-9 grid max-w-[1280px] grid-cols-1 items-start gap-x-4 gap-y-10 px-1 pt-3 sm:gap-x-7 sm:gap-y-12 md:grid-cols-3 lg:gap-x-10 xl:grid-cols-5 text-black/75">
+      <div className="mx-auto mt-9 grid max-w-[1640px] grid-cols-1 items-start gap-x-4 gap-y-10 px-1 pt-3 text-black/75 sm:gap-x-7 sm:gap-y-12 md:grid-cols-3 lg:gap-x-10 xl:grid-cols-5">
         {categories.map((category, index) => (
           <CategoryCard
             key={category.name}

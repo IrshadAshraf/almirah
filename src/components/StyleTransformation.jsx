@@ -101,7 +101,7 @@ export default function StyleTransformation() {
           className="pointer-events-none absolute bottom-0 right-0 -z-10 w-20 opacity-25 md:w-28"
         />
 
-        <div className="relative z-10 mx-auto grid max-w-[1440px] grid-cols-1 gap-x-12 gap-y-9 xl:grid-cols-12 xl:items-start">
+        <div className="relative z-10 mx-auto grid max-w-[1640px] grid-cols-1 gap-x-12 gap-y-9 xl:grid-cols-12 xl:items-start">
           <motion.div
             initial={{ opacity: 0, x: -55, filter: "blur(10px)" }}
             whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
@@ -119,9 +119,9 @@ export default function StyleTransformation() {
               className="relative inline-flex rounded-full border border-white/35 bg-white/[.03] px-5 py-2 text-xs font-bold tracking-[.14em] text-white/90 backdrop-blur-sm"
             >
               <WhiteBorderTrail />
-              REAL STYLE TRANSFORMATIONS
+              Real Style Transformations
             </motion.span>
-            <h2 className="mt-7 max-w-2xl text-4xl font-bold leading-[1.18] tracking-tight md:text-5xl lg:text-[3.35rem]">
+            <h2 className="mt-7 max-w-2xl text-2xl font-bold leading-[1.18] tracking-tight md:text-5xl lg:text-[3.35rem]">
               Discover Our Thoughtfully
               <br />
               Curated Collections
@@ -263,7 +263,6 @@ function Feature({ icon, title, text, highlighted, index }) {
           : "bg-white/[.025]"
       }`}
     >
-      <FeatureBorderTrail index={index} />
       <span className="relative grid h-14 w-14 shrink-0 place-items-center rounded-full bg-white/[.08] p-3">
         <img
           src={`${assetPath}${icon}`}
@@ -344,47 +343,6 @@ function Testimonial({ quote, name, role, avatar, index }) {
   );
 }
 
-function FeatureBorderTrail({ index }) {
-  if (index === 0) {
-    return (
-      <span className="pointer-events-none absolute inset-0 z-20 rounded-[28px]">
-        <motion.i
-          animate={{ left: ["2%", "86%", "2%"] }}
-          transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-0.5 h-1 w-12 rounded-full bg-gradient-to-r from-transparent via-white to-orange-300 shadow-[0_0_8px_2px_rgba(255,255,255,.65)]"
-        />
-        <motion.i
-          animate={{ right: ["2%", "86%", "2%"] }}
-          transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-0.5 h-1 w-12 rounded-full bg-gradient-to-l from-transparent via-white to-orange-300 shadow-[0_0_8px_2px_rgba(255,255,255,.65)]"
-        />
-      </span>
-    );
-  }
-
-  return (
-    <span className="pointer-events-none absolute inset-0 z-20 rounded-[28px]">
-      {[0, -2.6].map((delay) => (
-        <motion.i
-          key={delay}
-          animate={{ offsetDistance: ["0%", "100%"] }}
-          transition={{
-            duration: 5.2,
-            delay,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute left-0 top-0 h-2 w-2 rounded-full bg-white shadow-[0_0_8px_2px_rgba(255,255,255,.75)]"
-          style={{
-            offsetPath: "inset(1px round 28px)",
-            offsetRotate: "0deg",
-          }}
-        />
-      ))}
-    </span>
-  );
-}
-
 function TestimonialBorderTrail({ index }) {
   if (index === 0) {
     return (
@@ -442,7 +400,7 @@ function ReviewsDialog({ onClose }) {
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-white text-stone-900 transition hover:rotate-90"
+          className="sticky top-0 z-20 float-right grid h-10 w-10 place-items-center rounded-full bg-white text-stone-900 shadow-lg transition hover:rotate-90"
           aria-label="Close all reviews"
         >
           <X className="h-5 w-5" />

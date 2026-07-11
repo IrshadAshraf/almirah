@@ -30,7 +30,7 @@ const getSaved = (key, name) => {
 
 export default function ProductCards({ items = products }) {
   return (
-    <div className="mx-auto grid max-w-[1536px] gap-7 text-left sm:grid-cols-2 xl:grid-cols-4">
+    <div className="mx-auto grid max-w-[1640px] gap-7 text-left sm:grid-cols-2 xl:grid-cols-4">
       {items.map((item, index) => (
         <Product key={item[0]} item={item} delay={index * 0.09} />
       ))}

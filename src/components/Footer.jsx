@@ -93,7 +93,7 @@ export default function Footer() {
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-black/10 via-[#171717]/35 to-black/25" />
 
-      <div className="relative mx-auto flex h-full max-w-[1560px] flex-col">
+      <div className="relative mx-auto flex h-full max-w-[1640px] flex-col">
         <div className="grid gap-10 lg:grid-cols-[.8fr_.72fr_1.25fr] lg:items-start lg:gap-14 xl:gap-10">
           <div>
             <img
@@ -118,11 +118,11 @@ export default function Footer() {
             Updates!
           </h2>
 
-          <div>
-            <form onSubmit={subscribe}>
-              <div className="flex overflow-hidden rounded-xl bg-[#f4f3f3] shadow-xl shadow-black/15 xl:h-12">
+          <div className="min-w-0">
+            <form className="w-full min-w-0" onSubmit={subscribe}>
+              <div className="flex w-full min-w-0 overflow-hidden rounded-xl bg-[#f4f3f3] shadow-xl shadow-black/15 xl:h-12">
                 <input
-                  className="min-w-0 flex-1 bg-transparent px-6 py-4 text-stone-900 outline-none placeholder:text-stone-500"
+                  className="min-w-0 flex-1 bg-transparent px-4 py-4 text-stone-900 outline-none placeholder:text-stone-500 sm:px-6"
                   value={email}
                   onChange={(event) => {
                     setEmail(event.target.value);
@@ -137,7 +137,7 @@ export default function Footer() {
                   type="submit"
                   whileHover={{ scale: 1.06 }}
                   whileTap={{ scale: 0.94 }}
-                  className="grid w-20 place-items-center rounded-xl bg-brand text-white transition-colors hover:bg-[#7b3d18]"
+                  className="grid w-16 shrink-0 place-items-center rounded-xl bg-brand text-white transition-colors hover:bg-[#7b3d18] sm:w-20"
                   aria-label="Subscribe"
                 >
                   <Send className="h-5 w-5" fill="currentColor" />
