@@ -9,24 +9,54 @@ function App() {
 
   useEffect(() => {
     const startedAt = performance.now();
+    let cancelled = false;
     let finishTimer;
-    const fallbackTimer = setTimeout(() => setLoading(false), 4000);
 
-    const finishLoading = () => {
+    const waitForEvent = (target, successEvent) =>
+      new Promise((resolve) => {
+        const settle = () => {
+          target.removeEventListener(successEvent, settle);
+          target.removeEventListener("error", settle);
+          resolve();
+        };
+        target.addEventListener(successEvent, settle, { once: true });
+        target.addEventListener("error", settle, { once: true });
+      });
+
+    const waitForAssets = async () => {
+      const windowReady =
+        document.readyState === "complete"
+          ? Promise.resolve()
+          : waitForEvent(window, "load");
+
+      const imageReady = [...document.images].map((image) => {
+        if (!image.complete) return waitForEvent(image, "load");
+        return image.decode?.().catch(() => {}) ?? Promise.resolve();
+      });
+
+      const videoReady = [...document.querySelectorAll("video")].map((video) =>
+        video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA
+          ? Promise.resolve()
+          : waitForEvent(video, "canplaythrough"),
+      );
+
+      const fontsReady = document.fonts?.ready ?? Promise.resolve();
+
+      await Promise.all([windowReady, fontsReady, ...imageReady, ...videoReady]);
+      if (cancelled) return;
+
       const remaining = Math.max(0, 1000 - (performance.now() - startedAt));
       finishTimer = setTimeout(() => setLoading(false), remaining);
     };
 
-    if (document.readyState === "complete") finishLoading();
-    else window.addEventListener("load", finishLoading, { once: true });
+    waitForAssets();
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     return () => {
+      cancelled = true;
       clearTimeout(finishTimer);
-      clearTimeout(fallbackTimer);
-      window.removeEventListener("load", finishLoading);
       document.body.style.overflow = previousOverflow;
     };
   }, []);
