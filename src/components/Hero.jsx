@@ -127,11 +127,11 @@ export default function Hero() {
           className="relative z-10 max-w-2xl"
         >
           <motion.span
-            animate={glassBorder}
-            transition={glassTransition}
-            className="inline-flex items-center rounded-full border border-white/70 bg-white/35 px-4 py-2 text-base font-bold tracking-widest text-brand backdrop-blur-md"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+            className="relative inline-flex items-center rounded-full border border-white/70 bg-white/20 px-4 py-2 text-base font-bold tracking-widest text-brand backdrop-blur-sm"
           >
-            ● &nbsp; CURATED FASHION
+            <BrownBorderTrail />● &nbsp; CURATED FASHION
           </motion.span>
           <div className="relative mt-7">
             <motion.div
@@ -166,8 +166,9 @@ export default function Hero() {
             <motion.div
               animate={glassBorder}
               transition={glassTransition}
-              className="rounded-full"
+              className="relative rounded-full"
             >
+              <BrownBorderTrail />
               <HashLink
                 smooth
                 to="#gallary"
@@ -209,6 +210,51 @@ export default function Hero() {
     </section>
   );
 }
+
+function BrownBorderTrail({ radius = "999px" }) {
+  const duration = 3;
+
+  return (
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 rounded-full"
+    >
+      {Array.from({ length: 18 }, (_, index) => (
+        <motion.span
+          key={index}
+          className="absolute left-0 top-0 rounded-full bg-[#975124]"
+          style={{
+            offsetPath: `inset(1px round ${radius})`,
+            offsetRotate: "0deg",
+            width: `${4 - (index / 17) * 3}px`,
+            height: `${4 - (index / 17) * 3}px`,
+            opacity: 0.62 * (1 - index / 18),
+            boxShadow: `0 0 ${5 - (index / 17) * 3}px ${1 - (index / 17) * 0.8}px rgba(151,81,36,.48)`,
+          }}
+          animate={{ offsetDistance: ["0%", "100%"] }}
+          transition={{
+            duration,
+            repeat: Infinity,
+            ease: "circInOut",
+            delay: index === 0 ? 0 : -(duration - index * 0.018),
+          }}
+        />
+      ))}
+      <motion.span
+        className="absolute left-0 top-0 z-10 h-1.5 w-1.5 rounded-full bg-[#975124]"
+        style={{
+          offsetPath: `inset(1px round ${radius})`,
+          offsetRotate: "0deg",
+          boxShadow:
+            "0 0 7px 2px rgba(151,81,36,.9), 0 0 17px 5px rgba(151,81,36,.42)",
+        }}
+        animate={{ offsetDistance: ["0%", "100%"] }}
+        transition={{ duration, repeat: Infinity, ease: "circInOut" }}
+      />
+    </span>
+  );
+}
+
 function DealerCard() {
   const [expanded, setExpanded] = useState(false);
   return (
@@ -236,6 +282,7 @@ function DealerCard() {
         transition={glassTransition}
         className="pointer-events-none absolute inset-0 rounded-[34px_23px_34px_23px]"
       />
+      <BrownBorderTrail radius="28px" />
       <div className="relative min-w-[270px]">
         <div className="flex">
           <Avatar src="/src/assets/hero/Client Image.png" />
@@ -245,7 +292,9 @@ function DealerCard() {
         <strong className="mt-2 block text-[25px] font-medium leading-none text-black">
           1.6M+
         </strong>
-        <small className="mt-1 block text-sm text-black">Active Dealers</small>
+        <small className="mt-1 block text-sm text-black">
+          Active Customers
+        </small>
         <AnimatePresence>
           {expanded && (
             <motion.div
@@ -255,9 +304,17 @@ function DealerCard() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="mt-4 border-t border-black/10 pt-4"
             >
-              <p className="text-xs font-bold uppercase tracking-[.14em] text-brand">A growing community</p>
-              <p className="mt-2 text-sm leading-relaxed text-black/75">Trusted partners bringing curated fashion closer to customers every day.</p>
-              <div className="mt-3 flex items-center gap-2 text-xs font-bold text-black"><span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,.9)]" />Live network across the country</div>
+              <p className="text-xs font-bold uppercase tracking-[.14em] text-brand">
+                A growing community
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-black/75">
+                Trusted partners bringing curated fashion closer to customers
+                every day.
+              </p>
+              <div className="mt-3 flex items-center gap-2 text-xs font-bold text-black">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,.9)]" />
+                Live network across the country
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

@@ -1,1 +1,264 @@
-import React,{useState}from"react";import{Send,Check,Globe}from"lucide-react";import{FaXTwitter,FaInstagram,FaYoutube}from"react-icons/fa6";import{motion}from"framer-motion";const groups=[["Quick Link",["All Products","Women's Collection","Mens Collection","T-shirts","Events Calendar","News"]],["About",["Our Story","Shop Collection","New Season","Best Sellers","Style Journal","Ethnic Wear"]],["Support Links",["FAQ","Shipping & Delivery","Returns & Exchanges","Contact Us","Size Guide","Track Your Order"]]];export default function Footer(){const[email,setEmail]=useState(""),[sent,setSent]=useState(false);return <footer className="relative overflow-hidden bg-[#171717] px-6 py-20 text-white md:px-[5vw]"><motion.div animate={{backgroundPosition:["0% 50%","100% 50%","0% 50%"]}} transition={{duration:20,repeat:Infinity}} className="absolute inset-0 bg-cover opacity-25" style={{backgroundImage:"url('/src/assets/footer/Animate this image.jpg')"}}/><div className="relative mx-auto max-w-[1560px]"><div className="grid gap-12 border-b border-white/15 pb-10 md:grid-cols-2"><div><img className="h-14 w-24 rounded-full bg-[#f5e9df] object-contain" src="/src/assets/footer/image 3726 (1).png" alt="Almirah"/><p className="mt-5 text-sm leading-relaxed text-stone-200">Advancing Economic Growth,<br/>Financial Stability, and Institutional<br/>Excellence Through Knowledge,<br/>Innovation, and Collaboration.</p><h3 className="mt-8 text-xl font-bold">Stay Tuned</h3><div className="mt-4 flex gap-3"><Social href="https://x.com"><FaXTwitter/></Social><Social href="https://youtube.com"><FaYoutube/></Social><Social href="https://instagram.com"><FaInstagram/></Social><Social href="https://google.com"><Globe/></Social></div></div><div><h2 className="text-3xl font-bold">Register For Our<br/>Updates!</h2><form onSubmit={e=>{e.preventDefault();setSent(true);setEmail("")}} className="mt-5 flex overflow-hidden rounded-xl bg-white"><input className="min-w-0 flex-1 px-5 py-4 text-stone-900 outline-none" value={email} onChange={e=>setEmail(e.target.value)} type="email" required placeholder="Enter your email address"/><button className="grid w-16 place-items-center bg-brand transition hover:bg-[#7b3d18]"><Send/></button></form>{sent&&<p className="mt-3 flex items-center gap-2 text-sm text-green-300"><Check className="h-4 w-4"/>Thank you — you're on the list.</p>}<label className="mt-3 block text-sm text-stone-200"><input className="mr-2 accent-brand" required type="checkbox"/>I acknowledge all the Terms & Conditions</label></div></div><div className="grid gap-8 py-12 sm:grid-cols-2 lg:ml-[32%] lg:grid-cols-3">{groups.map(([title,links])=><div key={title}><h3 className="text-xl font-bold">{title}</h3>{links.map(link=><a className="mt-3 block text-sm text-stone-200 transition hover:translate-x-1 hover:text-[#e7a475]" href="#hero" key={link}>{link}</a>)}</div>)}</div><div className="flex flex-col items-center justify-between gap-5 text-center text-sm text-stone-200 md:flex-row"><span>© 2026 Almirah. All rights reserved.</span><a className="text-center" href="https://www.codes-inc.com/" target="_blank">Designed and hosted by<br/><b className="text-xl">Codesinc.</b></a><span>Privacy Policy　|　Terms & Condition</span></div></div></footer>};function Social({href,children}){return <a className="grid h-11 w-11 place-items-center rounded-full bg-[#714525] transition hover:-translate-y-1 hover:bg-brand hover:shadow-lg hover:shadow-brand/50" href={href} target="_blank">{children}</a>}
+import React, { useState } from "react";
+import { Check, Globe, Send } from "lucide-react";
+import { FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { AnimatePresence, motion } from "framer-motion";
+import AnimatedSeparatorTrail from "./AnimatedSeparatorTrail";
+
+const groups = [
+  [
+    "Quick Link",
+    [
+      "All Products",
+      "Women’s Collection",
+      "Men’s Collection",
+      "T-shirts",
+      "Events Calendar",
+      "News",
+    ],
+  ],
+  [
+    "About",
+    [
+      "Our Story",
+      "Shop Collection",
+      "New Season",
+      "Best Sellers",
+      "Style Journal",
+      "Ethnic Wear",
+    ],
+  ],
+  [
+    "Support Links",
+    [
+      "FAQ",
+      "Shipping & Delivery",
+      "Returns & Exchanges",
+      "Contact Us",
+      "Size Guide",
+      "Track Your Order",
+    ],
+  ],
+];
+
+export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [accepted, setAccepted] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const subscribe = (event) => {
+    event.preventDefault();
+    if (!accepted) return;
+    setSent(true);
+    setEmail("");
+  };
+
+  return (
+    <footer className="relative overflow-hidden rounded-t-[54px] bg-[#171717] px-6 py-14 text-white md:px-[5vw] xl:h-150 xl:max-h-150 xl:py-10">
+      <motion.div
+        animate={{
+          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+          scale: [1.03, 1.08, 1.03],
+          x: [-18, 18, -18],
+          y: [-8, 10, -8],
+          rotate: [-0.4, 0.4, -0.4],
+        }}
+        transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute -inset-12 bg-cover bg-center opacity-30"
+        style={{
+          backgroundImage: "url('/src/assets/footer/Animate this image.jpg')",
+        }}
+      />
+      <motion.div
+        animate={{
+          backgroundPosition: ["100% 45%", "0% 55%", "100% 45%"],
+          scale: [1.13, 1.04, 1.13],
+          x: [20, -24, 20],
+          y: [12, -10, 12],
+        }}
+        transition={{ duration: 31, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute -inset-16 bg-cover bg-center opacity-[.12] mix-blend-screen"
+        style={{
+          backgroundImage: "url('/src/assets/footer/Animate this image.jpg')",
+        }}
+      />
+      <motion.div
+        animate={{ x: ["-35%", "145%"] }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          repeatDelay: 3,
+          ease: "easeInOut",
+        }}
+        className="pointer-events-none absolute inset-y-0 w-1/5 -skew-x-12 bg-gradient-to-r from-transparent via-white/[.08] to-transparent blur-2xl"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-black/10 via-[#171717]/35 to-black/25" />
+
+      <div className="relative mx-auto flex h-full max-w-[1560px] flex-col">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_.72fr_1.25fr] lg:items-start lg:gap-14 xl:gap-10">
+          <div>
+            <img
+              className="h-auto w-36 object-contain xl:w-28"
+              src="/src/assets/footer/almirah-logo-white.png"
+              alt="Almirah Collective"
+            />
+            <p className="mt-5 max-w-[280px] text-sm leading-[1.55] text-stone-200 xl:mt-3 xl:text-[13px] xl:leading-[1.4]">
+              Advancing Economic Growth,
+              <br />
+              Financial Stability, and Institutional
+              <br />
+              Excellence Through Knowledge,
+              <br />
+              Innovation, and Collaboration.
+            </p>
+          </div>
+
+          <h2 className="text-2xl font-bold leading-tight lg:pt-4 lg:text-3xl">
+            Register For Our
+            <br />
+            Updates!
+          </h2>
+
+          <div>
+            <form onSubmit={subscribe}>
+              <div className="flex overflow-hidden rounded-xl bg-[#f4f3f3] shadow-xl shadow-black/15 xl:h-12">
+                <input
+                  className="min-w-0 flex-1 bg-transparent px-6 py-4 text-stone-900 outline-none placeholder:text-stone-500"
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                    setSent(false);
+                  }}
+                  type="email"
+                  required
+                  placeholder="Enter your email address"
+                  aria-label="Email address"
+                />
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.94 }}
+                  className="grid w-20 place-items-center rounded-xl bg-brand text-white transition-colors hover:bg-[#7b3d18]"
+                  aria-label="Subscribe"
+                >
+                  <Send className="h-5 w-5" fill="currentColor" />
+                </motion.button>
+              </div>
+              <label className="mt-3 flex cursor-pointer items-center gap-3 text-sm text-stone-200">
+                <input
+                  checked={accepted}
+                  onChange={(event) => setAccepted(event.target.checked)}
+                  className="h-4 w-4 rounded accent-brand"
+                  required
+                  type="checkbox"
+                />
+                I acknowledge all the Terms &amp; Conditions
+              </label>
+            </form>
+            <AnimatePresence>
+              {sent && (
+                <motion.p
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 4 }}
+                  className="mt-3 flex items-center gap-2 text-sm text-emerald-300"
+                >
+                  <Check className="h-4 w-4" /> Thank you — you’re on the list.
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <AnimatedSeparatorTrail light className="my-10 lg:ml-[31%] xl:my-6" />
+
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[.8fr_.72fr_.72fr_.78fr] lg:gap-14 xl:gap-10">
+          <div>
+            <h3 className="text-xl font-bold">Stay Tuned</h3>
+            <div className="mt-6 flex gap-3 xl:mt-4">
+              <Social href="https://x.com" label="X">
+                <FaXTwitter />
+              </Social>
+              <Social href="https://youtube.com" label="YouTube">
+                <FaYoutube />
+              </Social>
+              <Social href="https://instagram.com" label="Instagram">
+                <FaInstagram />
+              </Social>
+              <Social href="https://www.almirah.com" label="Website">
+                <Globe />
+              </Social>
+            </div>
+          </div>
+
+          {groups.map(([title, links]) => (
+            <div key={title}>
+              <h3 className="text-xl font-bold">{title}</h3>
+              <div className="mt-5 grid gap-3 xl:mt-3 xl:gap-2">
+                {links.map((link) => (
+                  <a
+                    className="w-fit text-sm text-stone-200 transition duration-300 hover:translate-x-1 hover:text-[#e7a475]"
+                    href="#hero"
+                    key={link}
+                  >
+                    {link}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-6 text-center text-sm text-stone-200 md:flex-row xl:mt-auto xl:gap-4 xl:text-xs">
+          <span>© 2026 Almirah. All rights reserved.</span>
+          <a
+            href="https://www.codes-inc.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="transition hover:scale-105"
+          >
+            <img
+              src="/src/assets/footer/image 13.png"
+              alt="Designed and hosted by Codesinc"
+              className="h-auto w-52 xl:w-44"
+            />
+          </a>
+          <span className="flex items-center gap-5">
+            <a href="#privacy" className="transition hover:text-white">
+              Privacy Policy
+            </a>
+            <i className="h-5 w-px bg-white/25" />
+            <a href="#terms" className="transition hover:text-white">
+              Terms &amp; Condition
+            </a>
+          </span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function Social({ href, label, children }) {
+  return (
+    <motion.a
+      whileHover={{
+        y: -5,
+        scale: 1.08,
+        rotate: -4,
+        boxShadow:
+          "0 0 10px 3px rgba(231,164,117,.65), 0 0 24px 8px rgba(151,81,36,.5)",
+      }}
+      whileTap={{ scale: 0.94 }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative grid h-11 w-11 place-items-center overflow-visible rounded-full border border-white/25 bg-gradient-to-br from-[#2b211c] to-[#87512e] text-white shadow-md"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+    >
+      <span className="pointer-events-none absolute inset-1 rounded-full bg-[#e7a475] opacity-0 blur-md transition-opacity duration-300 group-hover:animate-pulse group-hover:opacity-55" />
+      <span className="relative z-10 transition duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,.95)]">
+        {children}
+      </span>
+    </motion.a>
+  );
+}
