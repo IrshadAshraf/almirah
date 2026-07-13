@@ -1,14 +1,19 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export default function AnimatedSeparatorTrail({ light = false, className = "" }) {
+export default function AnimatedSeparatorTrail({
+  light = false,
+  className = "",
+}) {
   const color = light ? "#fff4ed" : "#975124";
   const glow = light ? "255,244,237" : "151,81,36";
   const duration = 3;
 
   return (
-    <div aria-hidden="true" className={`relative h-3 overflow-hidden ${className}`}>
-      <span className={`absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 ${light ? "bg-gradient-to-r from-transparent via-white/25 to-transparent" : "bg-gradient-to-r from-transparent via-stone-300 to-transparent"}`} />
+    <div aria-hidden="true" className={`relative h-3 ${className}`}>
+      <span
+        className={`absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 ${light ? "bg-gradient-to-r from-transparent via-white/25 to-transparent" : "bg-gradient-to-r from-transparent via-stone-300 to-transparent"}`}
+      />
       {Array.from({ length: 18 }, (_, index) => (
         <motion.span
           key={index}
