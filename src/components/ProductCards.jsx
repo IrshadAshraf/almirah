@@ -30,7 +30,7 @@ const getSaved = (key, name) => {
 
 export default function ProductCards({ items = products }) {
   return (
-    <div className="mx-auto grid max-w-[1640px] gap-7 text-left sm:grid-cols-2 xl:grid-cols-4">
+    <div className="mx-auto grid max-w-[1640px] grid-cols-2 gap-3 text-left sm:gap-7 lg:grid-cols-3 xl:grid-cols-4">
       {items.map((item, index) => (
         <Product key={item[0]} item={item} delay={index * 0.09} />
       ))}
@@ -89,9 +89,9 @@ function Product({ item: [name, type, image], delay }) {
           scale: 1.025,
           boxShadow: "0 24px 38px rgba(41, 25, 14, .2)",
         }}
-        className="group relative cursor-pointer overflow-hidden rounded-3xl bg-white shadow-md shadow-stone-900/15 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+        className="group relative cursor-pointer overflow-hidden rounded-2xl bg-white shadow-md shadow-stone-900/15 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:rounded-3xl"
       >
-        <div className="relative h-72 overflow-hidden">
+        <div className="relative h-36 overflow-hidden sm:h-72">
           <motion.div
             animate={{ scale: hovered ? 1.075 : 1 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -118,16 +118,19 @@ function Product({ item: [name, type, image], delay }) {
         <motion.button
           whileTap={{ scale: 0.82 }}
           onClick={(event) => stop(event, toggleFavourite)}
-          className="absolute right-4 top-4 z-10 rounded-full bg-white/85 p-2 text-red-500 shadow-lg backdrop-blur transition hover:scale-110"
+          className="absolute right-2 top-2 z-10 rounded-full bg-white/85 p-1.5 text-red-500 shadow-lg backdrop-blur transition hover:scale-110 sm:right-4 sm:top-4 sm:p-2"
           aria-label={
             liked
               ? `Remove ${name} from favourites`
               : `Add ${name} to favourites`
           }
         >
-          <Heart className="h-5 w-5" fill={liked ? "currentColor" : "none"} />
+          <Heart
+            className="h-4 w-4 sm:h-5 sm:w-5"
+            fill={liked ? "currentColor" : "none"}
+          />
         </motion.button>
-        <div className="relative flex min-h-28 items-center justify-between gap-3 py-4 pl-28 pr-5">
+        <div className="relative flex min-h-20 items-center justify-between gap-2 py-3 pl-16 pr-3 sm:min-h-28 sm:gap-3 sm:py-4 sm:pl-28 sm:pr-5">
           <motion.button
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -136,7 +139,7 @@ function Product({ item: [name, type, image], delay }) {
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={(event) => stop(event, toggleCart)}
-            className={`absolute -top-8 left-5 grid h-16 w-16 place-items-center rounded-full border-[6px] border-white text-white shadow-xl transition-colors ${added ? "bg-red-500" : "bg-brand"}`}
+            className={`absolute -top-5 left-3 grid h-11 w-11 place-items-center rounded-full border-[4px] border-white text-white shadow-xl transition-colors sm:-top-8 sm:left-5 sm:h-16 sm:w-16 sm:border-[6px] ${added ? "bg-red-500" : "bg-brand"}`}
             aria-label={
               added ? `Remove ${name} from cart` : `Add ${name} to cart`
             }
@@ -149,7 +152,7 @@ function Product({ item: [name, type, image], delay }) {
                   animate={{ opacity: 1, rotate: 0 }}
                   exit={{ opacity: 0, rotate: 60 }}
                 >
-                  <Trash2 className="h-5 w-5" />
+                  <Trash2 className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
                 </motion.span>
               ) : (
                 <motion.span
@@ -158,43 +161,31 @@ function Product({ item: [name, type, image], delay }) {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.6 }}
                 >
-                  <FaShoppingCart className="h-5 w-5" />
+                  <FaShoppingCart className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
                 </motion.span>
               )}
             </AnimatePresence>
           </motion.button>
           <div className="min-w-0">
-            <h3 className="font-serif text-lg text-stone-900">{name}</h3>
-            <p className="mt-1 text-xs text-slate-500">{type}</p>
+            <h3 className="truncate font-serif text-sm text-stone-900 sm:text-lg">
+              {name}
+            </h3>
+            <p className="mt-0.5 truncate text-[11px] text-slate-500 sm:mt-1 sm:text-xs">
+              {type}
+            </p>
             <AnimatePresence>
               {added && (
                 <motion.p
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 5 }}
-                  className="mt-1 text-xs font-bold text-emerald-600"
+                  className="mt-1 text-[10px] font-bold text-emerald-600 sm:text-xs"
                 >
                   In your bag
                 </motion.p>
               )}
             </AnimatePresence>
           </div>
-          <motion.button
-            whileHover={{ y: -3, scale: 1.15 }}
-            transition={{ type: "spring", stiffness: 420, damping: 13 }}
-            whileTap={{ scale: 0.85 }}
-            onClick={(event) => stop(event, toggleCart)}
-            className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition ${added ? "bg-red-50 text-red-500" : "text-brand hover:bg-brand hover:text-white"}`}
-            aria-label={
-              added ? `Remove ${name} from cart` : `Add ${name} to cart`
-            }
-          >
-            {added ? (
-              <Trash2 className="h-4 w-4" />
-            ) : (
-              <FaShoppingCart className="h-4 w-4" />
-            )}
-          </motion.button>
         </div>
       </motion.article>
       {createPortal(
@@ -239,7 +230,7 @@ function ProductDialog({ item, onClose }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 grid place-items-center bg-stone-950/55 p-5 backdrop-blur-md sm:p-8"
+      className="fixed inset-0 z-50 grid place-items-center bg-stone-950/55 p-4 backdrop-blur-md sm:p-8"
       onMouseDown={onClose}
       role="presentation"
     >
@@ -252,32 +243,32 @@ function ProductDialog({ item, onClose }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="product-dialog-title"
-        className="grid w-full max-w-3xl overflow-hidden rounded-[2rem] border border-white/60 bg-[#fffaf7]/75 shadow-2xl shadow-stone-950/45 backdrop-blur-2xl md:grid-cols-2"
+        className="grid max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-[1.5rem] border border-white/60 bg-[#fffaf7]/75 shadow-2xl shadow-stone-950/45 backdrop-blur-2xl sm:max-h-none sm:rounded-[2rem] md:grid-cols-2"
       >
         <motion.img
           initial={{ scale: 1.12 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.65, ease: "easeOut" }}
-          className="h-72 w-full object-cover md:h-full"
+          className="h-56 w-full object-cover sm:h-72 md:h-full"
           src={`/assets/collections/${item.image}`}
           alt={item.name}
         />
-        <div className="relative p-7 sm:p-9">
+        <div className="relative p-5 sm:p-7 md:p-9">
           <motion.button
             whileHover={{ rotate: 90 }}
             whileTap={{ scale: 0.9 }}
             onClick={onClose}
-            className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-stone-900 text-white shadow-lg"
+            className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-stone-900 text-white shadow-lg sm:right-5 sm:top-5 sm:h-10 sm:w-10"
             aria-label="Close product details"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4 sm:h-5 sm:w-5" />
           </motion.button>
           <p className="pr-12 text-xs font-bold uppercase tracking-[.18em] text-brand">
             {item.type}
           </p>
           <h2
             id="product-dialog-title"
-            className="mt-3 font-serif text-3xl text-stone-900"
+            className="mt-3 font-serif text-2xl text-stone-900 sm:text-3xl"
           >
             {item.name}
           </h2>

@@ -6,7 +6,7 @@ export default function Collections() {
   return (
     <section className="bg-white px-6 py-12 text-center md:px-[5vw] md:py-14">
       <Reveal effect="blur">
-        <AnimatedPillLabel>OUR COLLECTION</AnimatedPillLabel>
+        <AnimatedPillLabel>Our Collection</AnimatedPillLabel>
         <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">
           Discover Our <span className="text-brand">Latest Arrivals</span>
         </h2>
