@@ -12,6 +12,22 @@ const glassBorder = {
   ],
 };
 const glassTransition = { duration: 2.6, repeat: Infinity, ease: "easeInOut" };
+const revealEase = [0.16, 1, 0.3, 1];
+const heroReveal = {
+  hidden: {},
+  visible: {
+    transition: { delayChildren: 0.12, staggerChildren: 0.11 },
+  },
+};
+const heroRevealItem = {
+  hidden: { opacity: 0, y: 28, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.85, ease: revealEase },
+  },
+};
 const perkDetails = {
   brands: {
     label: "Premium Brands",
@@ -75,7 +91,7 @@ const perkDetails = {
   },
 };
 
-export default function Hero() {
+export default function Hero({ ready = true }) {
   const [activePerk, setActivePerk] = useState(null);
   useEffect(() => {
     const closeOnEscape = (event) =>
@@ -85,7 +101,10 @@ export default function Hero() {
   }, []);
   return (
     <section className="relative isolate min-h-[760px] overflow-hidden bg-[#e7d4c5] md:min-h-[855px]">
-      <video
+      <motion.video
+        initial={{ opacity: 0, scale: 1.025 }}
+        animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.025 }}
+        transition={{ duration: 1.35, ease: revealEase }}
         className="absolute inset-0 -z-30 h-full w-full object-cover"
         autoPlay
         muted
@@ -93,7 +112,7 @@ export default function Hero() {
         playsInline
       >
         <source src="/assets/hero/Animate_mobile_screen_products_s…_202607101158.mp4" />
-      </video>
+      </motion.video>
       <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(250,239,231,.97)_0%,rgba(250,239,231,.85)_35%,rgba(245,223,205,.16)_72%)]" />
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <motion.div
@@ -121,19 +140,21 @@ export default function Hero() {
       </div>
       <div className="relative mx-auto flex min-h-[760px] w-full max-w-[1640px] items-center px-6 pb-24 pt-44 md:min-h-[855px] md:w-[92vw] md:px-0">
         <motion.div
-          initial={{ opacity: 0, x: -46 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.85, ease: "easeOut" }}
+          variants={heroReveal}
+          initial="hidden"
+          animate={ready ? "visible" : "hidden"}
           className="relative z-10 max-w-2xl"
         >
-          <motion.span
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
-            className="relative inline-flex items-center rounded-full border border-white/70 bg-white/20 px-4 py-2 text-base font-bold tracking-widest text-brand backdrop-blur-sm"
-          >
-            <BrownBorderTrail />● &nbsp; CURATED FASHION
-          </motion.span>
-          <div className="relative mt-7">
+          <motion.div variants={heroRevealItem} className="w-fit">
+            <motion.span
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+              className="relative inline-flex items-center rounded-full border border-white/70 bg-white/20 px-4 py-2 text-base font-bold tracking-widest text-brand backdrop-blur-sm"
+            >
+              <BrownBorderTrail />● &nbsp; CURATED FASHION
+            </motion.span>
+          </motion.div>
+          <motion.div variants={heroRevealItem} className="relative mt-7">
             <motion.div
               animate={{ x: [-20, 24, -20], opacity: [0.15, 0.45, 0.15] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
@@ -146,12 +167,12 @@ export default function Hero() {
               <br />
               Living
             </h1>
-          </div>
-          <p className="mt-7 max-w-xl text-base leading-relaxed text-slate-600 md:text-xl">
+          </motion.div>
+          <motion.p variants={heroRevealItem} className="mt-7 max-w-xl text-base leading-relaxed text-slate-600 md:text-xl">
             Discover handpicked fashion pieces that blend comfort, elegance, and
             individuality. Chosen to help you look effortlessly stylish.
-          </p>
-          <div className="mt-9 flex flex-nowrap gap-1 sm:gap-4">
+          </motion.p>
+          <motion.div variants={heroRevealItem} className="mt-9 flex flex-nowrap gap-1 sm:gap-4">
             <HashLink
               smooth
               to="#collections"
@@ -181,8 +202,8 @@ export default function Hero() {
                 Shop Collection
               </HashLink>
             </motion.div>
-          </div>
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-base text-stone-700">
+          </motion.div>
+          <motion.div variants={heroRevealItem} className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-base text-stone-700">
             <Perk icon={<RotateCcw />} onClick={() => setActivePerk("brands")}>
               Premium Brands
             </Perk>
@@ -192,9 +213,9 @@ export default function Hero() {
             <Perk icon={<Check />} onClick={() => setActivePerk("returns")}>
               Easy Returns
             </Perk>
-          </div>
+          </motion.div>
         </motion.div>
-        <DealerCard />
+        <DealerCard ready={ready} />
       </div>
       {createPortal(
         <AnimatePresence>
@@ -255,7 +276,7 @@ function BrownBorderTrail({ radius = "999px" }) {
   );
 }
 
-function DealerCard() {
+function DealerCard({ ready }) {
   const [expanded, setExpanded] = useState(false);
   return (
     <motion.div
@@ -263,11 +284,15 @@ function DealerCard() {
         y: [0, -9, 0],
         width: expanded ? 310 : 166,
         height: expanded ? 262 : 154,
+        opacity: ready ? 1 : 0,
+        scale: ready ? 1 : 0.92,
       }}
       transition={{
         y: { duration: 4.2, repeat: Infinity, ease: "easeInOut" },
         width: { type: "spring", stiffness: 240, damping: 24 },
         height: { type: "spring", stiffness: 240, damping: 24 },
+        opacity: { duration: 0.8, delay: ready ? 0.55 : 0 },
+        scale: { duration: 0.9, delay: ready ? 0.55 : 0, ease: revealEase },
       }}
       onHoverStart={() => setExpanded(true)}
       onHoverEnd={() => setExpanded(false)}

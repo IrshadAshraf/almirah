@@ -15,14 +15,14 @@ import Faqs from "@/components/Faqs";
 import Footer from "@/components/Footer";
 import NotificationBar from "@/components/NotificationBar";
 
-function Home() {
+function Home({ ready = true }) {
   return (
     <>
       <NotificationBar />
       <Navbar />
 
-      <section id="hero">
-        <Hero />
+      <section id="hero" data-navbar-theme="dark">
+        <Hero ready={ready} />
       </section>
 
       <section id="browse-categories">
@@ -37,7 +37,7 @@ function Home() {
         <Collections />
       </section>
 
-      <section id="gift-giving">
+      <section id="gift-giving" data-navbar-theme="dark">
         <GiftGiving />
       </section>
 
@@ -61,7 +61,7 @@ function Home() {
         <HotSellings />
       </section>
 
-      <section id="style-transformation">
+      <section id="style-transformation" data-navbar-theme="dark">
         <StyleTransformation />
       </section>
 

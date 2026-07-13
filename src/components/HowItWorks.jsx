@@ -46,7 +46,7 @@ export default function HowItWorks() {
 
   return (
     <>
-      <section className="overflow-x-clip px-6 py-16 text-center md:px-[5vw] md:py-20">
+      <section className="overflow-x-clip px-6 py-12 text-center md:px-[5vw] md:py-14">
         <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -59,7 +59,7 @@ export default function HowItWorks() {
           </h2>
         </motion.div>
 
-        <div className="mx-auto mt-14 grid max-w-[1640px] grid-cols-1 gap-8 text-left md:grid-cols-2 md:gap-10 lg:mt-16 xl:grid-cols-3">
+        <div className="mx-auto mt-7 grid max-w-[1640px] grid-cols-1 gap-8 text-left md:mt-8 md:grid-cols-2 md:gap-10 xl:grid-cols-3">
           {steps.map((step, index) => (
             <ProcessCard
               key={step.title}

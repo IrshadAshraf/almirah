@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Heart, ShoppingCart, Trash2, X } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  ShoppingCart,
+  Trash2,
+  X,
+} from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -8,23 +15,41 @@ import {
   useSpring,
 } from "framer-motion";
 import AnimatedPillLabel from "./AnimatedPillLabel";
-import { addToCart, Float, removeFromCart, Reveal, toggleLike } from "./ui";
+import { addToCart, removeFromCart, Reveal, toggleLike } from "./ui";
+
 const images = [
-  { file: "image 3719.png", alt: "Floral occasion wear", rows: "row-span-9" },
+  {
+    file: "image 3719.png",
+    alt: "Floral occasion wear",
+    rows: "row-span-[9]",
+  },
   {
     file: "image 3720.png",
     alt: "Waterfront casual style",
-    rows: "row-span-11",
+    rows: "row-span-[11]",
   },
-  { file: "image 3721.png", alt: "Classic tailored suit", rows: "row-span-8" },
-  { file: "image 3722.png", alt: "Relaxed café style", rows: "row-span-8" },
+  {
+    file: "image 3721.png",
+    alt: "Classic tailored suit",
+    rows: "row-span-[8]",
+  },
+  {
+    file: "image 3722.png",
+    alt: "Relaxed café style",
+    rows: "row-span-[8]",
+  },
   {
     file: "image 3723.png",
     alt: "Burgundy traditional wear",
-    rows: "row-span-8",
+    rows: "row-span-[8]",
   },
-  { file: "image 3724.png", alt: "Checked casual shirt", rows: "row-span-10" },
+  {
+    file: "image 3724.png",
+    alt: "Checked casual shirt",
+    rows: "row-span-[10]",
+  },
 ];
+
 const galleryProducts = [
   {
     name: "Blush Floral Ensemble",
@@ -63,6 +88,74 @@ const galleryProducts = [
     image: "image 3724.png",
   },
 ];
+
+// Six distinct reveal choreographies — one per gallery tile, so no two
+// images enter the viewport the same way.
+const galleryRevealPresets = [
+  {
+    // 0 — slides in from the left with a slight tilt, curtain wipes right
+    hidden: {
+      opacity: 0,
+      x: -80,
+      rotate: -3,
+      clipPath: "inset(0 100% 0 0 round 12px)",
+    },
+    cover: { x: "112%", y: 0 },
+  },
+  {
+    // 1 — rises up from below, curtain wipes upward
+    hidden: {
+      opacity: 0,
+      y: 90,
+      scale: 0.9,
+      clipPath: "inset(100% 0 0 0 round 12px)",
+    },
+    cover: { x: 0, y: "-112%" },
+  },
+  {
+    // 2 — slides in from the right with a slight tilt, curtain wipes left
+    hidden: {
+      opacity: 0,
+      x: 80,
+      rotate: 3,
+      clipPath: "inset(0 0 0 100% round 12px)",
+    },
+    cover: { x: "-112%", y: 0 },
+  },
+  {
+    // 3 — diagonal drop from the top-left, curtain wipes to bottom-right
+    hidden: {
+      opacity: 0,
+      x: -60,
+      y: 55,
+      rotate: -4,
+      clipPath: "inset(0 100% 100% 0 round 12px)",
+    },
+    cover: { x: "118%", y: "-118%" },
+  },
+  {
+    // 4 — zooms in slightly from above, curtain wipes downward
+    hidden: {
+      opacity: 0,
+      y: -70,
+      scale: 1.1,
+      clipPath: "inset(0 0 100% 0 round 12px)",
+    },
+    cover: { x: 0, y: "112%" },
+  },
+  {
+    // 5 — diagonal drop from the top-right, curtain wipes to bottom-left
+    hidden: {
+      opacity: 0,
+      x: 60,
+      y: 55,
+      rotate: 4,
+      clipPath: "inset(100% 0 0 100% round 12px)",
+    },
+    cover: { x: "-118%", y: "-118%" },
+  },
+];
+
 export default function Gallary() {
   const [dialog, setDialog] = useState(null);
 
@@ -74,7 +167,7 @@ export default function Gallary() {
 
   return (
     <>
-      <section className="px-6 py-24 text-center md:px-[5vw]">
+      <section className="overflow-x-clip px-6 py-12 text-center md:px-[5vw] md:py-14">
         <Reveal effect="blur">
           <AnimatedPillLabel>OUR GALLERY</AnimatedPillLabel>
           <h2 className="mt-5 text-2xl font-bold tracking-tight md:text-6xl">
@@ -86,18 +179,29 @@ export default function Gallary() {
             attention to detail.
           </p>
         </Reveal>
-        <div className="mx-auto mt-12 grid max-w-[1640px] auto-rows-[12px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+        {/* Mobile & tablet: interactive drag/swipe slider */}
+        <GalleryMobileSlider />
+
+        {/* Desktop: masonry grid, unchanged layout, unique reveal per tile */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.05 }}
+          className="mx-auto mt-7 hidden max-w-[1640px] auto-rows-[12px] grid-cols-3 gap-4 md:mt-8 lg:grid"
+        >
           {images.map(({ file, alt, rows }, i) => (
-            <Float
+            <GalleryRevealTile
               key={file}
-              delay={i * 0.15}
+              index={i}
               className={`${rows} h-full min-h-0`}
             >
               <GalleryTile file={file} alt={alt} index={i} />
-            </Float>
+            </GalleryRevealTile>
           ))}
-        </div>
-        <div className="mt-9 flex flex-wrap justify-center gap-4">
+        </motion.div>
+
+        <div className="mx-auto mt-9 flex w-full max-w-md flex-nowrap justify-center gap-2 sm:gap-4">
           <MagneticGalleryButton onClick={() => setDialog("explore")} primary>
             Explore Collection
           </MagneticGalleryButton>
@@ -115,6 +219,226 @@ export default function Gallary() {
         document.body,
       )}
     </>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile / tablet interactive slider                                   */
+/* ------------------------------------------------------------------ */
+
+function GalleryMobileSlider() {
+  const trackRef = useRef(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
+  const dragX = useMotionValue(0);
+
+  const measure = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    setDragConstraints({ left: -maxScroll, right: 0 });
+  };
+
+  useEffect(() => {
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  const slideTo = (index) => {
+    const clamped = Math.max(0, Math.min(images.length - 1, index));
+    const track = trackRef.current;
+    const slide = track?.children[clamped];
+    if (!track || !slide) return;
+
+    const target = -(
+      slide.offsetLeft -
+      (track.clientWidth - slide.clientWidth) / 2
+    );
+    const min = -(track.scrollWidth - track.clientWidth);
+    const clampedTarget = Math.max(min, Math.min(0, target));
+
+    dragX.set(clampedTarget);
+    setActiveSlide(clamped);
+  };
+
+  const onDragEnd = (_, info) => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const children = Array.from(track.children);
+    const current = dragX.get();
+    const velocityBoost = info.velocity.x * 0.12;
+    const projected = current + velocityBoost;
+
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    children.forEach((child, index) => {
+      const childCenter =
+        child.offsetLeft + child.clientWidth / 2 - track.clientWidth / 2;
+      const distance = Math.abs(-projected - childCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    slideTo(closestIndex);
+  };
+
+  return (
+    <div className="mt-7 md:mt-8 lg:hidden">
+      <div className="mb-5 flex items-center justify-between text-left">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand">
+            Swipe the edit
+          </p>
+          <p className="mt-1 text-sm text-slate-500" aria-live="polite">
+            {String(activeSlide + 1).padStart(2, "0")} /{" "}
+            {String(images.length).padStart(2, "0")}
+          </p>
+        </div>
+
+        <div className="flex gap-2">
+          <SliderButton
+            label="Previous gallery image"
+            disabled={activeSlide === 0}
+            onClick={() => slideTo(activeSlide - 1)}
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </SliderButton>
+          <SliderButton
+            label="Next gallery image"
+            disabled={activeSlide === images.length - 1}
+            onClick={() => slideTo(activeSlide + 1)}
+          >
+            <ChevronRight className="h-5 w-5" />
+          </SliderButton>
+        </div>
+      </div>
+
+      <div className="-mx-6 overflow-hidden px-[9vw] pb-6 pt-2 sm:px-[28vw] md:-mx-[5vw]">
+        <motion.div
+          ref={trackRef}
+          drag="x"
+          dragConstraints={dragConstraints}
+          dragElastic={0.06}
+          dragTransition={{ power: 0.25, timeConstant: 200 }}
+          onDragEnd={onDragEnd}
+          style={{ x: dragX }}
+          className="flex cursor-grab gap-4 active:cursor-grabbing"
+        >
+          {images.map(({ file, alt }, index) => (
+            <MobileSliderSlide
+              key={file}
+              index={index}
+              isActive={index === activeSlide}
+            >
+              <GalleryTile file={file} alt={alt} index={index} />
+            </MobileSliderSlide>
+          ))}
+        </motion.div>
+      </div>
+
+      <div className="mt-1 flex items-center justify-center gap-2">
+        {images.map((image, index) => (
+          <button
+            key={image.file}
+            type="button"
+            onClick={() => slideTo(index)}
+            aria-label={`Go to gallery image ${index + 1}`}
+            aria-current={activeSlide === index ? "true" : undefined}
+            className={`h-1.5 rounded-full transition-[width,background-color] duration-500 ${
+              activeSlide === index ? "w-9 bg-brand" : "w-2 bg-brand/20"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MobileSliderSlide({ children, index, isActive }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.94, y: 24 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.06,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      animate={{
+        scale: isActive ? 1 : 0.94,
+        opacity: isActive ? 1 : 0.6,
+      }}
+      className="h-[26rem] w-[82vw] shrink-0 select-none sm:h-[30rem] sm:w-[44vw]"
+    >
+      <div className="h-full w-full overflow-hidden rounded-xl">{children}</div>
+    </motion.div>
+  );
+}
+
+function SliderButton({ children, disabled, label, onClick }) {
+  return (
+    <motion.button
+      type="button"
+      aria-label={label}
+      disabled={disabled}
+      onClick={onClick}
+      whileHover={disabled ? undefined : { scale: 1.08, rotate: 3 }}
+      whileTap={disabled ? undefined : { scale: 0.92 }}
+      className="grid h-11 w-11 place-items-center rounded-full border border-brand/20 bg-white text-brand shadow-[0_8px_25px_rgba(151,81,36,0.12)] transition duration-300 hover:border-brand hover:bg-brand hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+    >
+      {children}
+    </motion.button>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Desktop grid reveal wrapper                                         */
+/* ------------------------------------------------------------------ */
+
+function GalleryRevealTile({ children, className, index }) {
+  const preset = galleryRevealPresets[index % galleryRevealPresets.length];
+
+  return (
+    <motion.div
+      variants={{
+        hidden: preset.hidden,
+        visible: {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          clipPath: "inset(0 0 0 0 round 12px)",
+        },
+      }}
+      transition={{
+        duration: 1,
+        delay: index * 0.09,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className={`relative overflow-hidden rounded-xl ${className}`}
+    >
+      {children}
+      <motion.span
+        aria-hidden="true"
+        variants={{
+          hidden: { x: 0, y: 0, opacity: 0.95 },
+          visible: { ...preset.cover, opacity: 0 },
+        }}
+        transition={{
+          duration: 0.9,
+          delay: 0.08 + index * 0.09,
+          ease: [0.76, 0, 0.24, 1],
+        }}
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-br from-[#ead2c2] via-[#a96234] to-[#6f351b]"
+      />
+    </motion.div>
   );
 }
 
@@ -145,7 +469,7 @@ function MagneticGalleryButton({ children, onClick, primary = false }) {
       onMouseMove={followCursor}
       onMouseLeave={reset}
       onClick={onClick}
-      className={`rounded-full px-7 py-3 text-sm font-bold transition-[background-color,color,box-shadow] duration-300 hover:shadow-xl ${
+      className={`min-w-0 flex-1 whitespace-nowrap rounded-full px-[clamp(0.5rem,2vw,1.75rem)] py-3 text-[clamp(0.6rem,2.8vw,0.875rem)] font-bold transition-[background-color,color,box-shadow] duration-300 hover:shadow-xl ${
         primary
           ? "bg-brand text-white hover:shadow-brand/25"
           : "border border-slate-300 bg-white text-stone-900 hover:border-brand hover:text-brand"
@@ -189,6 +513,7 @@ function GalleryTile({ file, alt, index }) {
           className="h-full w-full object-cover object-top"
           src={`/assets/gallary/${file}`}
           alt={alt}
+          draggable={false}
         />
         <GalleryImageOverlay index={index} />
       </motion.div>

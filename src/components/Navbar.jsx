@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   Menu,
@@ -29,7 +29,7 @@ const discoverLinks = [
   ["FAQ", "#faqs"],
 ];
 const iconButton =
-  "relative grid h-9 w-9 shrink-0 place-items-center rounded-full text-white transition hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:h-10 sm:w-10";
+  "relative grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-10 sm:w-10";
 
 const getStoredItems = (key) => {
   try {
@@ -41,6 +41,7 @@ const getStoredItems = (key) => {
 };
 
 export default function Navbar() {
+  const headerRef = useRef(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [discoverOpen, setDiscoverOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -49,6 +50,7 @@ export default function Navbar() {
   const [likedItems, setLikedItems] = useState([]);
   const [activeDialog, setActiveDialog] = useState(null);
   const [noticeVisible, setNoticeVisible] = useState(true);
+  const [isDarkBackground, setIsDarkBackground] = useState(true);
 
   useEffect(() => {
     const update = () => {
@@ -77,6 +79,44 @@ export default function Navbar() {
     return () => removeEventListener("keydown", onKeyDown);
   }, []);
 
+  useEffect(() => {
+    let frame;
+
+    const updateTheme = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const header = headerRef.current;
+        if (!header) return;
+
+        const bounds = header.getBoundingClientRect();
+        const sampleX = window.innerWidth / 2;
+        const sampleY = Math.min(
+          window.innerHeight - 1,
+          Math.max(0, bounds.top + bounds.height / 2),
+        );
+        const backgroundSection = document
+          .elementsFromPoint(sampleX, sampleY)
+          .map((element) =>
+            element.closest(
+              "section[data-navbar-theme], footer[data-navbar-theme], section[id]",
+            ),
+          )
+          .find(Boolean);
+
+        setIsDarkBackground(backgroundSection?.dataset.navbarTheme === "dark");
+      });
+    };
+
+    updateTheme();
+    addEventListener("scroll", updateTheme, { passive: true });
+    addEventListener("resize", updateTheme);
+    return () => {
+      cancelAnimationFrame(frame);
+      removeEventListener("scroll", updateTheme);
+      removeEventListener("resize", updateTheme);
+    };
+  }, [noticeVisible]);
+
   const cartCount = cartItems.reduce(
     (total, item) => total + (item.qty || 1),
     0,
@@ -96,16 +136,28 @@ export default function Navbar() {
     setActiveDialog(type);
   };
   const dialogItems = activeDialog === "cart" ? cartItems : likedItems;
+  const themedIconButton = `${iconButton} ${
+    isDarkBackground
+      ? "text-white hover:bg-white/15 focus-visible:outline-white"
+      : "text-stone-900 hover:bg-stone-900/10 focus-visible:outline-stone-900"
+  }`;
 
   return (
     <>
       <motion.header
+        ref={headerRef}
         initial={{ y: -42, opacity: 0 }}
         animate={{ y: noticeVisible ? 38 : 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: "easeOut" }}
         className="fixed left-0 top-3 z-30 w-full px-3 sm:px-5 md:px-[4vw]"
       >
-        <nav className="relative mx-auto flex h-auto min-w-0 max-w-[1640px] items-center justify-between rounded-full border border-white/45 bg-stone-950/10 px-3 py-2 text-white shadow-2xl shadow-stone-950/15 backdrop-blur-2xl sm:px-4 md:px-8">
+        <nav
+          className={`relative mx-auto flex h-auto min-w-0 max-w-[1640px] items-center justify-between rounded-full border px-3 py-2 shadow-md backdrop-blur-2xl transition-[background-color,border-color,color,box-shadow] duration-500 sm:px-4 md:px-8 ${
+            isDarkBackground
+              ? "border-white/45 bg-stone-950/10 text-white"
+              : "border-stone-900/10 bg-white/75 text-stone-900"
+          }`}
+        >
           <HashLink
             smooth
             to="#hero"
@@ -125,14 +177,14 @@ export default function Navbar() {
                 key={to}
                 smooth
                 to={to}
-                className="text-sm font-medium transition hover:text-[#f7d0b5]"
+                className={`text-sm font-medium transition ${isDarkBackground ? "hover:text-[#f7d0b5]" : "hover:text-brand"}`}
               >
                 {label}
               </HashLink>
             ))}
             <button
               onClick={() => setDiscoverOpen(!discoverOpen)}
-              className="flex items-center gap-1 text-sm font-medium transition hover:text-[#f7d0b5]"
+              className={`flex items-center gap-1 text-sm font-medium transition ${isDarkBackground ? "hover:text-[#f7d0b5]" : "hover:text-brand"}`}
             >
               Discover{" "}
               <ChevronDown
@@ -143,14 +195,14 @@ export default function Navbar() {
           <div className="flex min-w-0 shrink-0 items-center gap-0.5 sm:gap-1">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className={iconButton}
+              className={themedIconButton}
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
             </button>
             <button
               onClick={() => openDialog("likes")}
-              className={iconButton}
+              className={themedIconButton}
               aria-label="Liked items"
             >
               <Heart
@@ -161,14 +213,14 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => openDialog("cart")}
-              className={iconButton}
+              className={themedIconButton}
               aria-label="Cart"
             >
               <ShoppingBag className="h-5 w-5" />
               {cartCount > 0 && <Badge>{cartCount}</Badge>}
             </button>
             <button
-              className={`${iconButton} lg:hidden`}
+              className={`${themedIconButton} lg:hidden`}
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -176,7 +228,6 @@ export default function Navbar() {
             </button>
           </div>
           <AnimatePresence>
-            {discoverOpen && <DesktopMenu onClose={close} />}
             {searchOpen && (
               <motion.form
                 initial={{ opacity: 0, y: -8, scale: 0.96 }}
@@ -187,16 +238,20 @@ export default function Navbar() {
                   goToProducts();
                   setSearchOpen(false);
                 }}
-                className="absolute right-3 top-[78px] flex w-[min(360px,calc(100vw-24px))] overflow-hidden rounded-2xl border border-white/40 bg-stone-950/85 p-1 shadow-2xl backdrop-blur-xl"
+                className={`absolute right-3 top-[78px] flex w-[min(360px,calc(100vw-24px))] overflow-hidden rounded-2xl border p-1 shadow-md backdrop-blur-2xl transition-colors duration-500 ${
+                  isDarkBackground
+                    ? "border-white/45 bg-stone-950/35 text-white"
+                    : "border-stone-900/10 bg-white/80 text-stone-900"
+                }`}
               >
                 <input
                   autoFocus
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
-                  className="min-w-0 flex-1 bg-transparent px-4 py-2 text-sm outline-none placeholder:text-white/55"
+                  className={`min-w-0 flex-1 bg-transparent px-4 py-2 text-sm outline-none ${isDarkBackground ? "placeholder:text-white/55" : "placeholder:text-stone-500"}`}
                   placeholder="Search the collection"
                 />
-                <button className="rounded-xl bg-brand px-4 text-sm font-semibold transition hover:bg-[#7b3d18]">
+                <button className="rounded-xl bg-brand px-4 text-sm font-semibold text-white transition hover:bg-[#7b3d18]">
                   Go
                 </button>
               </motion.form>
@@ -206,6 +261,14 @@ export default function Navbar() {
             {mobileOpen && <MobileMenu onClose={close} />}
           </AnimatePresence>
         </nav>
+        <AnimatePresence>
+          {discoverOpen && (
+            <DesktopMenu dark={isDarkBackground} onClose={close} />
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {mobileOpen && <MobileMenu dark={isDarkBackground} onClose={close} />}
+        </AnimatePresence>
       </motion.header>
       {createPortal(
         <AnimatePresence>
@@ -355,19 +418,23 @@ function Badge({ children }) {
     <motion.b
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
-      className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-brand px-1 text-[9px]"
+      className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-brand px-1 text-[9px] text-white"
     >
       {children}
     </motion.b>
   );
 }
-function DesktopMenu({ onClose }) {
+function DesktopMenu({ dark, onClose }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="absolute left-1/2 top-[78px] grid w-[440px] -translate-x-1/2 grid-cols-2 gap-1 rounded-3xl border border-white/30 bg-stone-950/90 p-3 shadow-2xl backdrop-blur-xl"
+      className={`absolute left-1/2 top-[78px] grid w-[440px] -translate-x-1/2 grid-cols-2 gap-1 rounded-3xl border p-3 shadow-md backdrop-blur-3xl transition-colors duration-500 ${
+        dark
+          ? "border-white/45 bg-stone-950/35 text-white"
+          : "border-stone-900/10 bg-white/80 text-stone-900"
+      }`}
     >
       {discoverLinks.map(([label, to]) => (
         <HashLink
@@ -375,7 +442,7 @@ function DesktopMenu({ onClose }) {
           smooth
           to={to}
           onClick={onClose}
-          className="rounded-2xl px-4 py-3 text-sm text-white/90 transition hover:bg-white/10 hover:text-white"
+          className={`rounded-2xl px-4 py-3 text-sm transition ${dark ? "text-white/90 hover:bg-white/10 hover:text-white" : "text-stone-700 hover:bg-stone-900/10 hover:text-brand"}`}
         >
           {label}
         </HashLink>
@@ -383,13 +450,17 @@ function DesktopMenu({ onClose }) {
     </motion.div>
   );
 }
-function MobileMenu({ onClose }) {
+function MobileMenu({ dark, onClose }) {
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: "auto" }}
       exit={{ opacity: 0, height: 0 }}
-      className="absolute left-0 right-0 top-[78px] overflow-hidden rounded-3xl border border-white/25 bg-[#2b1b13]/95 p-3 shadow-2xl backdrop-blur-xl lg:hidden"
+      className={`absolute left-3 right-3 top-[78px] overflow-hidden rounded-3xl border p-3 shadow-md backdrop-blur-3xl transition-colors duration-500 sm:left-5 sm:right-5 md:left-[4vw] md:right-[4vw] lg:hidden ${
+        dark
+          ? "border-white/45 bg-stone-950/35 text-white"
+          : "border-stone-900/10 bg-white/80 text-stone-900"
+      }`}
     >
       {[...primaryLinks, ...discoverLinks].map(([label, to]) => (
         <HashLink
@@ -397,7 +468,7 @@ function MobileMenu({ onClose }) {
           smooth
           to={to}
           onClick={onClose}
-          className="block rounded-xl px-5 py-3 text-sm hover:bg-white/10"
+          className={`block rounded-xl px-5 py-3 text-sm transition ${dark ? "hover:bg-white/10" : "hover:bg-stone-900/10 hover:text-brand"}`}
         >
           {label}
         </HashLink>

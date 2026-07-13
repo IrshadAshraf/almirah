@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Star, X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useAnimationFrame,
+  useMotionValue,
+  useReducedMotion,
+} from "framer-motion";
 
 const assetPath = "/assets/style transformation/";
 
@@ -19,7 +25,7 @@ const features = [
   },
 ];
 
-const testimonials = [
+const allReviews = [
   {
     quote:
       "Every piece feels thoughtfully chosen. The quality is beautiful, and styling it feels completely effortless.",
@@ -34,10 +40,6 @@ const testimonials = [
     role: "VERIFIED CLIENT",
     avatar: "avatar1.png",
   },
-];
-
-const allReviews = [
-  ...testimonials,
   {
     quote:
       "The fabric feels premium and the fit was exactly as described. It became an instant wardrobe favourite.",
@@ -87,7 +89,7 @@ export default function StyleTransformation() {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-[#191919] px-6 py-20 text-white md:px-[5vw] lg:py-24">
+      <section className="relative isolate overflow-hidden bg-[#191919] px-6 py-12 text-white md:px-[5vw] md:py-14">
         <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_78%_-5%,rgba(151,81,36,.75),transparent_35%),radial-gradient(circle_at_55%_70%,rgba(255,255,255,.06),transparent_35%)]" />
         <motion.div
           animate={{ opacity: [0.08, 0.2, 0.08], scale: [1, 1.08, 1] }}
@@ -154,21 +156,15 @@ export default function StyleTransformation() {
             />
           </motion.div>
 
-          <div className="grid gap-6 sm:grid-cols-2 xl:col-span-8 xl:col-start-5 xl:row-start-2 xl:self-center">
-            {testimonials.map((testimonial, index) => (
-              <Testimonial
-                key={testimonial.name}
-                {...testimonial}
-                index={index}
-              />
-            ))}
+          <div className="min-w-0 xl:col-span-8 xl:col-start-5 xl:row-start-2 xl:self-center">
+            <ReviewsAutoSlider />
             <motion.button
               type="button"
               onClick={() => setReviewsOpen(true)}
               whileHover={{ y: -4, scale: 1.025 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.25 }}
-              className="group relative mx-auto mt-1 overflow-hidden rounded-full border border-white/35 bg-white/[.06] px-7 py-3 text-sm font-bold text-white shadow-lg backdrop-blur-md sm:col-span-2"
+              className="group relative mx-auto mt-3 block overflow-hidden rounded-full border border-white/35 bg-white/[.06] px-7 py-3 text-sm font-bold text-white shadow-lg backdrop-blur-md"
             >
               <span className="absolute inset-0 origin-left scale-x-0 bg-white transition-transform duration-300 group-hover:scale-x-100" />
               <span className="relative transition-colors duration-300 group-hover:text-brand">
@@ -187,6 +183,68 @@ export default function StyleTransformation() {
         document.body,
       )}
     </>
+  );
+}
+
+function ReviewsAutoSlider() {
+  const trackRef = useRef(null);
+  const paused = useRef(false);
+  const x = useMotionValue(0);
+  const reduceMotion = useReducedMotion();
+  const reviews = [...allReviews, ...allReviews];
+
+  useAnimationFrame((_, delta) => {
+    if (reduceMotion || paused.current || !trackRef.current) return;
+
+    const loopWidth = trackRef.current.scrollWidth / 2;
+    if (!loopWidth) return;
+
+    // Cap large frame gaps (for example after switching tabs) so the track
+    // never appears to jump when animation resumes.
+    const next = x.get() - Math.min(delta, 40) * 0.032;
+    const distance = ((-next % loopWidth) + loopWidth) % loopWidth;
+    x.set(-distance);
+  });
+
+  return (
+    <div
+      className="relative py-3"
+      onMouseEnter={() => {
+        paused.current = true;
+      }}
+      onMouseLeave={() => {
+        paused.current = false;
+      }}
+      aria-label="Customer reviews carousel"
+    >
+      <div
+        className="overflow-hidden py-5"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+        }}
+      >
+        <motion.div
+          ref={trackRef}
+          style={{ x, willChange: "transform" }}
+          className="flex w-max gap-6 pr-6"
+        >
+          {reviews.map((review, index) => (
+            <Testimonial
+              key={`${review.name}-${index}`}
+              {...review}
+              index={index % allReviews.length}
+              duplicate={index >= allReviews.length}
+            />
+          ))}
+        </motion.div>
+      </div>
+
+      <div className="pointer-events-none absolute inset-y-8 left-0 w-16 bg-gradient-to-r from-[#191919]/70 to-transparent blur-sm" />
+      <div className="pointer-events-none absolute inset-y-8 right-0 w-16 bg-gradient-to-l from-[#191919]/70 to-transparent blur-sm" />
+    </div>
   );
 }
 
@@ -278,50 +336,35 @@ function Feature({ icon, title, text, highlighted, index }) {
   );
 }
 
-function Testimonial({ quote, name, role, avatar, index }) {
+function Testimonial({ quote, name, role, avatar, index, duplicate = false }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, rotate: index ? 4 : -4 }}
-      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
+      aria-hidden={duplicate ? "true" : undefined}
+      initial={{ opacity: 0.12, y: 14, scale: 0.93, filter: "blur(7px)" }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: false, amount: 0.18 }}
       transition={{
-        duration: 0.8,
-        delay: 0.18 + index * 0.14,
-        ease: "easeOut",
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
       }}
+      style={{ willChange: "transform, opacity, filter" }}
+      className="w-[78vw] max-w-[390px] shrink-0 sm:w-[360px]"
     >
       <motion.article
-        animate={{ y: [0, index ? -7 : -10, 0] }}
-        transition={{
-          duration: 4.4 + index * 0.5,
-          delay: index * 0.2,
-          repeat: Infinity,
-          ease: "easeInOut",
-          scale: { duration: 0.4 },
+        whileHover={{
+          y: -7,
+          scale: 1.018,
+          borderColor: "rgba(251,146,60,.32)",
+          boxShadow: "0 28px 60px rgba(151,81,36,.28)",
         }}
-        whileHover={
-          index === 0
-            ? {
-                scale: 1.028,
-                rotate: -1.2,
-                boxShadow: "0 28px 55px rgba(151,81,36,.34)",
-                transition: { duration: 0.25 },
-              }
-            : {
-                scale: 1.025,
-                rotate: 1.2,
-                x: 6,
-                boxShadow: "0 28px 55px rgba(255,255,255,.12)",
-                transition: { duration: 0.25 },
-              }
-        }
-        className="relative min-h-[295px] overflow-hidden rounded-[28px] border border-white/[.04] bg-black/90 p-7 shadow-2xl"
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="relative h-full min-h-[295px] overflow-hidden rounded-[28px] border border-white/[.07] bg-[linear-gradient(145deg,rgba(8,8,8,.97),rgba(25,17,13,.94))] p-7 shadow-2xl"
       >
         <TestimonialBorderTrail index={index} />
         <div
           className={`pointer-events-none absolute h-44 w-44 rounded-full bg-brand/45 blur-3xl ${index ? "-right-20 -top-24" : "-left-20 -top-24"}`}
         />
-        <Stars />
+        <Stars staticStars />
         <p className="relative mt-8 text-base font-medium italic leading-relaxed text-white/90">
           “{quote}”
         </p>

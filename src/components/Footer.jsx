@@ -4,6 +4,22 @@ import { FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import AnimatedSeparatorTrail from "./AnimatedSeparatorTrail";
 
+const footerReveal = {
+  hidden: {},
+  visible: {
+    transition: { delayChildren: 0.08, staggerChildren: 0.1 },
+  },
+};
+const footerRevealItem = {
+  hidden: { opacity: 0, y: 26, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 const groups = [
   [
     "Quick Link",
@@ -53,7 +69,10 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden rounded-t-[54px] bg-[#171717] px-6 py-14 text-white md:px-[5vw] xl:h-150 xl:max-h-150 xl:py-10">
+    <footer
+      data-navbar-theme="dark"
+      className="relative overflow-hidden rounded-t-4xl lg:rounded-t-[54px] bg-[#171717] px-6 py-14 text-white md:px-[5vw] xl:h-150 xl:max-h-150 xl:py-10"
+    >
       <motion.div
         animate={{
           backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -93,9 +112,18 @@ export default function Footer() {
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-black/10 via-[#171717]/35 to-black/25" />
 
-      <div className="relative mx-auto flex h-full max-w-[1640px] flex-col">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_.72fr_1.25fr] lg:items-start lg:gap-14 xl:gap-10">
-          <div>
+      <motion.div
+        variants={footerReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.12 }}
+        className="relative mx-auto flex h-full max-w-[1640px] flex-col"
+      >
+        <motion.div
+          variants={footerReveal}
+          className="grid gap-10 lg:grid-cols-[.8fr_.72fr_1.25fr] lg:items-start lg:gap-14 xl:gap-10"
+        >
+          <motion.div variants={footerRevealItem}>
             <img
               className="h-auto w-36 object-contain xl:w-28"
               src="/assets/footer/almirah-logo-white.png"
@@ -110,15 +138,18 @@ export default function Footer() {
               <br />
               Innovation, and Collaboration.
             </p>
-          </div>
+          </motion.div>
 
-          <h2 className="text-2xl font-bold leading-tight lg:pt-4 lg:text-3xl">
+          <motion.h2
+            variants={footerRevealItem}
+            className="text-2xl font-bold leading-tight lg:pt-4 lg:text-3xl"
+          >
             Register For Our
             <br />
             Updates!
-          </h2>
+          </motion.h2>
 
-          <div className="min-w-0">
+          <motion.div variants={footerRevealItem} className="min-w-0">
             <form className="w-full min-w-0" onSubmit={subscribe}>
               <div className="flex w-full min-w-0 overflow-hidden rounded-xl bg-[#f4f3f3] shadow-xl shadow-black/15 xl:h-12">
                 <input
@@ -166,13 +197,18 @@ export default function Footer() {
                 </motion.p>
               )}
             </AnimatePresence>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <AnimatedSeparatorTrail light className="my-10 lg:ml-[31%] xl:my-6" />
+        <motion.div variants={footerRevealItem}>
+          <AnimatedSeparatorTrail light className="my-10 lg:ml-[31%] xl:my-6" />
+        </motion.div>
 
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[.8fr_.72fr_.72fr_.78fr] lg:gap-14 xl:gap-10">
-          <div>
+        <motion.div
+          variants={footerReveal}
+          className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[.8fr_.72fr_.72fr_.78fr] lg:gap-14 xl:gap-10"
+        >
+          <motion.div variants={footerRevealItem}>
             <h3 className="text-xl font-bold">Stay Tuned</h3>
             <div className="mt-6 flex gap-3 xl:mt-4">
               <Social href="https://x.com" label="X">
@@ -188,10 +224,10 @@ export default function Footer() {
                 <Globe />
               </Social>
             </div>
-          </div>
+          </motion.div>
 
           {groups.map(([title, links]) => (
-            <div key={title}>
+            <motion.div variants={footerRevealItem} key={title}>
               <h3 className="text-xl font-bold">{title}</h3>
               <div className="mt-5 grid gap-3 xl:mt-3 xl:gap-2">
                 {links.map((link) => (
@@ -204,11 +240,14 @@ export default function Footer() {
                   </a>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-6 text-center text-sm text-stone-200 md:flex-row xl:mt-auto xl:gap-4 xl:text-xs">
+        <motion.div
+          variants={footerRevealItem}
+          className="mt-12 flex flex-col items-center justify-between gap-6 text-center text-sm text-stone-200 md:flex-row xl:mt-auto xl:gap-4 xl:text-xs"
+        >
           <span>© 2026 Almirah. All rights reserved.</span>
           <a
             href="https://www.codes-inc.com/"
@@ -231,8 +270,8 @@ export default function Footer() {
               Terms &amp; Condition
             </a>
           </span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </footer>
   );
 }

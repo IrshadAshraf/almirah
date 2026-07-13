@@ -69,7 +69,7 @@ function App() {
     <div className="relative min-h-screen text-base">
       <AnimatePresence>{loading && <PageLoader />}</AnimatePresence>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home ready={!loading} />} />
       </Routes>
     </div>
   );

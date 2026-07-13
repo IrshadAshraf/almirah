@@ -68,7 +68,7 @@ export default function Faqs() {
 
   return (
     <>
-      <section className="mx-auto grid w-full max-w-[1640px] grid-cols-1 gap-10 px-6 py-20 text-left md:w-[92vw] md:grid-cols-2 md:gap-24 md:px-0 md:py-28">
+      <section className="mx-auto grid w-full max-w-[1640px] grid-cols-1 gap-10 px-6 py-12 text-left md:w-[92vw] md:grid-cols-2 md:gap-24 md:px-0 md:py-14">
         <Reveal>
           <div>
             <h2 className="m-0 text-4xl font-bold tracking-[-0.06em] text-[#12252b] md:text-5xl">
@@ -81,7 +81,7 @@ export default function Faqs() {
             </p>
             <div
               aria-hidden="true"
-              className="my-12 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent md:my-20"
+              className="my-7 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent md:my-12"
             />
             <div className="grid gap-3 text-sm text-stone-600 sm:grid-cols-2">
               <span className="flex items-center gap-2">

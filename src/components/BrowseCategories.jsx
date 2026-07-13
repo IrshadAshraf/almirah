@@ -113,7 +113,7 @@ export default function BrowseCategories() {
     return () => removeEventListener("keydown", closeOnEscape);
   }, []);
   return (
-    <section className="overflow-hidden px-4 py-14 text-center sm:px-6 md:px-[5vw] md:py-16">
+    <section className="overflow-hidden px-4 py-12 text-center sm:px-6 md:px-[5vw] md:py-14">
       <motion.h2
         initial={{ opacity: 0, scale: 0.75, y: 34 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -123,7 +123,7 @@ export default function BrowseCategories() {
       >
         Browse By Category
       </motion.h2>
-      <div className="mx-auto mt-9 grid max-w-[1640px] grid-cols-1 items-start gap-x-4 gap-y-10 px-1 pt-3 text-black/75 sm:gap-x-7 sm:gap-y-12 md:grid-cols-3 lg:gap-x-10 xl:grid-cols-5">
+      <div className="mx-auto mt-7 grid max-w-[1640px] grid-cols-1 items-start gap-x-4 gap-y-10 px-1 pt-3 text-black/75 sm:gap-x-7 sm:gap-y-12 md:mt-8 md:grid-cols-3 lg:gap-x-10 xl:grid-cols-5">
         {categories.map((category, index) => (
           <CategoryCard
             key={category.name}

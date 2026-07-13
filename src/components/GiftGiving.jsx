@@ -38,7 +38,7 @@ export default function GiftGiving() {
 
   return (
     <>
-      <section className="relative grid min-h-[340px] place-items-center overflow-hidden bg-brand px-6 py-14 text-center text-white md:min-h-[390px] md:py-16">
+      <section className="relative grid min-h-[340px] place-items-center overflow-hidden bg-brand px-6 py-12 text-center text-white md:min-h-[390px] md:py-14">
         <motion.div
           animate={{
             x: [-48, 42, -48],

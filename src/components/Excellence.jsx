@@ -44,7 +44,7 @@ export default function Excellence() {
 
   return (
     <>
-      <section className="overflow-hidden bg-[#eee1d8] px-6 py-24 text-center md:px-[5vw]">
+      <section className="overflow-hidden bg-[#eee1d8] px-6 py-12 text-center md:px-[5vw] md:py-14">
         <motion.div
           initial={{ opacity: 0, y: 45, scale: 0.9, filter: "blur(14px)" }}
           whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
@@ -60,7 +60,7 @@ export default function Excellence() {
           </p>
         </motion.div>
 
-        <div className="mx-auto mt-14 grid max-w-[1640px] gap-6 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center">
+        <div className="mx-auto mt-7 grid max-w-[1640px] gap-6 md:mt-8 lg:grid-cols-[1fr_1.5fr_1fr] lg:items-center">
           <div className="grid gap-6">
             {cards.slice(0, 2).map((card, index) => (
               <ExcellenceCard

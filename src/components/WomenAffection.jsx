@@ -58,7 +58,7 @@ export default function WomenAffection() {
 
   return (
     <>
-      <section className="overflow-hidden px-6 py-24 text-center md:px-[5vw]">
+      <section className="overflow-hidden px-6 py-12 text-center md:px-[5vw] md:py-14">
         <motion.div
           initial={{ opacity: 0, rotateX: 72, y: 45, filter: "blur(12px)" }}
           whileInView={{ opacity: 1, rotateX: 0, y: 0, filter: "blur(0px)" }}
@@ -77,7 +77,7 @@ export default function WomenAffection() {
           </motion.h2>
         </motion.div>
 
-        <div className="mx-auto mt-14 grid max-w-[1640px] gap-6 text-left sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mx-auto mt-7 grid max-w-[1640px] gap-6 text-left sm:grid-cols-2 md:mt-8 xl:grid-cols-4">
           {features.map(([Icon, title, text, points], index) => (
             <FeatureCard
               key={title}

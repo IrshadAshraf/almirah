@@ -54,7 +54,7 @@ export default function AboutUs() {
     return () => removeEventListener("keydown", closeOnEscape);
   }, []);
   return (
-    <section className="mx-auto grid max-w-[1640px] gap-14 overflow-hidden px-6 py-20 md:grid-cols-2 md:items-center md:px-[5vw] lg:gap-20">
+    <section className="mx-auto grid max-w-[1640px] gap-14 overflow-hidden px-6 py-12 md:grid-cols-2 md:items-center md:px-[5vw] md:py-14 lg:gap-20">
       <ImageComposition />
       <motion.div
         initial={{ opacity: 0, x: 55, filter: "blur(12px)" }}
