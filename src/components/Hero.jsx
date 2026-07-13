@@ -100,10 +100,12 @@ export default function Hero({ ready = true }) {
     return () => removeEventListener("keydown", closeOnEscape);
   }, []);
   return (
-    <section className="relative isolate min-h-[760px] overflow-hidden bg-[#e7d4c5] md:min-h-[855px]">
+    <section className="relative isolate min-h-190 overflow-hidden bg-[#e7d4c5] md:min-h-224">
       <motion.video
         initial={{ opacity: 0, scale: 1.025 }}
-        animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.025 }}
+        animate={
+          ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.025 }
+        }
         transition={{ duration: 1.35, ease: revealEase }}
         className="absolute inset-0 -z-30 h-full w-full object-cover"
         autoPlay
@@ -148,7 +150,11 @@ export default function Hero({ ready = true }) {
           <motion.div variants={heroRevealItem} className="w-fit">
             <motion.span
               animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 3.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
               className="relative inline-flex items-center rounded-full border border-white/70 bg-white/20 px-4 py-2 text-base font-bold tracking-widest text-brand backdrop-blur-sm"
             >
               <BrownBorderTrail />● &nbsp; CURATED FASHION
@@ -168,11 +174,17 @@ export default function Hero({ ready = true }) {
               Living
             </h1>
           </motion.div>
-          <motion.p variants={heroRevealItem} className="mt-7 max-w-xl text-base leading-relaxed text-slate-600 md:text-xl">
+          <motion.p
+            variants={heroRevealItem}
+            className="mt-7 max-w-xl text-base leading-relaxed text-slate-600 md:text-xl"
+          >
             Discover handpicked fashion pieces that blend comfort, elegance, and
             individuality. Chosen to help you look effortlessly stylish.
           </motion.p>
-          <motion.div variants={heroRevealItem} className="mt-9 flex flex-nowrap gap-1 sm:gap-4">
+          <motion.div
+            variants={heroRevealItem}
+            className="mt-9 flex flex-nowrap gap-1 sm:gap-4"
+          >
             <HashLink
               smooth
               to="#collections"
@@ -182,7 +194,8 @@ export default function Hero({ ready = true }) {
               }}
               className="inline-flex min-w-0 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-full bg-brand px-2 py-3.5 text-[11px] font-bold text-white transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/35 sm:gap-2 sm:px-7 sm:py-4 sm:text-sm"
             >
-              Shop New Arrivals <ArrowUpRight className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" />
+              Shop New Arrivals{" "}
+              <ArrowUpRight className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" />
             </HashLink>
             <motion.div
               animate={glassBorder}
@@ -203,7 +216,10 @@ export default function Hero({ ready = true }) {
               </HashLink>
             </motion.div>
           </motion.div>
-          <motion.div variants={heroRevealItem} className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-base text-stone-700">
+          <motion.div
+            variants={heroRevealItem}
+            className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-base text-stone-700"
+          >
             <Perk icon={<RotateCcw />} onClick={() => setActivePerk("brands")}>
               Premium Brands
             </Perk>
